@@ -1,0 +1,87 @@
+<div class="container reg-form my-4 mx-auto bg-white p-4">
+    <h1 class="text-center">Employee Registration Form</h1>
+    <form [formGroup]="registrationForm" (ngSubmit)="getRegister()">
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                <label for="employeeName" class="form-label">Full Name:</label>
+                <input class="form-control p-2" id="employeeName" type="text" formControlName="employeeName" placeholder="Enter your Full Name"/>
+                <!-- Validation Message -->
+                @if (registrationForm.get('employeeName')?.invalid && registrationForm.get('employeeName')?.touched) {
+                <p style="color: red;">FullName must be at least 3 and max 30 characters.</p>
+                }
+            </div>
+            <div class="col-lg-6 mb-3">
+                <label for="nickname" class="form-label">Nickame:</label>
+                <input class="form-control p-2" id="nickname" type="text" formControlName="nickname" placeholder="Enter a small name you liked to be called" />
+                <!-- Validation Message -->
+                @if (registrationForm.get('nickname')?.invalid && registrationForm.get('nickname')?.touched) {
+                <p style="color: red;">Nickname can't be greater than 10 characters.</p>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                <label for="employeePhoneNumber" class="form-label">Phone Number:</label>
+                <input class="form-control p-2" id="employeePhoneNumber" type="tel" formControlName="employeePhoneNumber" placeholder="Enter 10 digit working phone number"/>
+                <!-- Validation Message -->
+                @if (registrationForm.get('employeePhoneNumber')?.invalid && registrationForm.get('employeePhoneNumber')?.touched) {
+                <p style="color: red;">Its required for your username</p>
+                }
+            </div>
+            <div class="col-lg-6 mb-3">
+                <label for="employeeDOB" class="form-label">Date of Birth:</label>
+                <input class="form-control p-2" id="employeeDOB" type="date" formControlName="employeeDOB" />
+                <!-- Validation Message -->
+                @if (registrationForm.get('employeeDOB')?.invalid && registrationForm.get('employeeDOB')?.touched) {
+                <p style="color: red;">Date of birth should be accurate</p>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                <label for="employeeAddress" class="form-label">Address:</label>
+                <input class="form-control p-2" id="employeeAddress" type="text" formControlName="employeeAddress" placeholder="Enter Address seperated by comma(5-9/6-32,MainRd,Roypeta,Narsapur,AndhraPradesh,534275)" />
+                <!-- Validation Message -->
+                @if (registrationForm.get('employeeAddress')?.invalid && registrationForm.get('employeeAddress')?.touched) {
+                <p style="color: red;">Enter Your address which is genuine</p>
+                }
+            </div>
+            <div class="col-lg-6 mb-3">
+                <label for="employeeEmail" class="form-label">Email:</label>
+                <input class="form-control p-2" id="employeeEmail" type="email" formControlName="employeeEmail" placeholder="Not necessary, if you have then only enter" />
+                <!-- Validation Message -->
+                @if (registrationForm.get('employeeEmail')?.invalid && registrationForm.get('employeeEmail')?.touched) {
+                <p style="color: red;">Enter your correct Email Id</p>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input class="form-control p-2" id="password" type="password" formControlName="password" placeholder="Enter a strong password"/>
+                <!-- Validation Message -->
+                @if (registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched) {
+                <p style="color: red;">Password should be in correct format</p>
+                }
+            </div>
+            <div class="col-lg-6 mb-3">
+                <label for="employeeConformPassword" class="form-label">Conform Password:</label>
+                <input class="form-control p-2" id="employeeConformPassword" type="password" formControlName="employeeConformPassword" placeholder="Enter same password again"/>
+                <!-- Validation Message -->
+                @if ( registrationForm.hasError('passwordMismatch') && registrationForm.get('employeeConformPassword')?.touched) {
+                <p style="color: red;">Conform Password and Password should be same</p>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-dark text-center w-25 mx-auto" [disabled]="registrationForm.invalid">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+<app-modal [isVisible]="isModalOpen" 
+  [message]="validMessage"
+  [icon]="iconValue"
+  [textColor]="textColor"
+  (close)="isModalOpen = false"></app-modal>

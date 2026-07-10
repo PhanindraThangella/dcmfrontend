@@ -1,0 +1,216 @@
+    <div class="w-100 flex-grow-1">
+
+        <!-- Toolbar -->
+        <div class="d-flex justify-content-end gap-2 mb-3 no-print">
+
+            <button class="btn btn-success" (click)="exportExcel()">
+                <i class="bi bi-file-earmark-excel"></i>
+                Export Excel
+            </button>
+
+            <button class="btn btn-primary" (click)="print()">
+                <i class="bi bi-printer"></i>
+                Print
+            </button>
+
+        </div>
+
+        <div class="records-container">
+
+            @for(record of records; track $index){
+
+            <div class="card shadow-sm mb-3 daybook-card border border-primary">
+
+                <!-- HEADER -->
+                <div class="card-header text-white bg-white card-header-click" (click)="toggleCard($index)">
+
+                    <div class="d-flex align-items-center w-100">
+
+                        <div class="transaction-type">
+                            <div class="badge badge-gold rounded-pill" [ngClass]="getBadgeClass(record.typeOfPayment)">
+                                <h5 class="mb-1 fw-bold text-center">
+                                    @switch(record.typeOfPayment){
+                                        @case('Sales'){ Sales }
+                                        @case('Credit'){ Credit }
+                                        @case('OG Purchase'){ Old Gold Purchased }
+                                        @case('OS Purchase'){ Old Silver Purchased }
+                                        @case('PG Sale'){ Pure Gold Sale }
+                                        @case('PS Sale'){ Pure Silver Sale }
+                                    }
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class=" d-flex gap-3 align-items-center ms-3 text-dark">
+                            @if(record.customerName){
+                                <div class="text-end ms-4 me-4">
+                                    <div class="small opacity-75">Customer Name</div>
+                                    <div class="fw-bold fs-5">
+                                        {{record.customerName}}
+                                    </div>
+                                </div>
+                            }
+                            @if(record.totalAmount){
+                                <div class="text-end ms-4 me-4">
+                                    <div class="small opacity-75">Grams</div>
+                                    <div class="fw-bold fs-5">
+                                        {{record.totalGrams}}
+                                    </div>
+                                </div>
+                            }
+                            @if(record.totalAmount){
+                                <div class="text-end ms-4 me-4">
+                                    <div class="small opacity-75">Total Amount</div>
+                                    <div class="fw-bold fs-5">
+                                        {{record.totalAmount | currency:'INR':'symbol':'1.0-0'}}
+                                    </div>
+                                </div>
+                            }
+                            @if(record.creditAmount && !record.tagNumber){
+                                <div class="text-end ms-2 me-4">
+                                    <div class="small opacity-75">Credit Amount</div>
+                                    <div class="fw-bold fs-5">
+                                        {{record.creditAmount | currency:'INR':'symbol':'1.0-0'}}
+                                    </div>
+                                </div>
+                            }
+                            @if(record.itemType) {
+                                <span class="badge rounded-pill text-danger fw-bold fs-5 ms-4 me-4" [ngClass]="getBadgeClass(record.itemType)">{{record.itemType}}</span>
+                            }
+                        </div>
+
+                        <div class="ms-auto d-flex align-items-center gap-3 text-dark">
+
+                            <i class="bi fs-4"
+                            [class.bi-chevron-down]="!isExpanded($index)"
+                            [class.bi-chevron-up]="isExpanded($index)">
+                            </i>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- BODY -->
+
+                @if(isExpanded($index)){
+
+                <div class="card-body">
+
+                    <div class="details-grid">
+
+                        @if(record.tagNumber){
+                        <div class="detail-box">
+                            <label>Tag Number</label>
+                            <span>{{record.tagNumber}}</span>
+                        </div>
+                        }
+
+                        @if(record.customerName){
+                        <div class="detail-box">
+                            <label>Customer</label>
+                            <span>{{record.customerName}}</span>
+                        </div>
+                        }
+
+                        @if(record.mobileNumber){
+                        <div class="detail-box">
+                            <label>Mobile</label>
+                            <span>{{record.mobileNumber}}</span>
+                        </div>
+                        }
+
+                        @if(record.itemType){
+                        <div class="detail-box">
+                            <label>Item</label>
+                            <span>{{record.itemType}}</span>
+                        </div>
+                        }
+
+                        @if(record.totalGrams){
+                        <div class="detail-box">
+                            <label>Total Grams</label>
+                            <span>{{record.totalGrams}}</span>
+                        </div>
+                        }
+
+                        @if(record.totalAmount){
+                        <div class="detail-box">
+                            <label>Total Amount</label>
+                            <span class="amount">
+                                {{record.totalAmount | currency:'INR':'symbol':'1.0-0'}}
+                            </span>
+                        </div>
+                        }
+
+                        @if(record.cashPaid){
+                        <div class="detail-box">
+                            <label>Cash Paid</label>
+                            <span class="text-success fw-bold">
+                                {{record.cashPaid | currency:'INR':'symbol':'1.0-0'}}
+                            </span>
+                        </div>
+                        }
+
+                        @if(record.upiPaid){
+                        <div class="detail-box">
+                            <label>UPI Paid</label>
+                            <span class="text-primary fw-bold">
+                                {{record.upiPaid | currency:'INR':'symbol':'1.0-0'}}
+                            </span>
+                        </div>
+                        }
+
+                        @if(record.creditAmount){
+                        <div class="detail-box">
+                            <label>Credit Amount</label>
+                            <span class="text-danger fw-bold">
+                                {{record.creditAmount | currency:'INR':'symbol':'1.0-0'}}
+                            </span>
+                        </div>
+                        }
+
+                        @if(record.oldGoldGrams){
+                        <div class="detail-box">
+                            <label>🟡 Old Gold Grams</label>
+                            <span>{{record.oldGoldGrams}}</span>
+                        </div>
+                        }
+
+                        @if(record.oldGoldAmount){
+                        <div class="detail-box">
+                            <label>Old Gold Amount</label>
+                            <span class="text-warning fw-bold">
+                                {{record.oldGoldAmount | currency:'INR':'symbol':'1.0-0'}}
+                            </span>
+                        </div>
+                        }
+
+                        @if(record.oldSilverGrams){
+                        <div class="detail-box">
+                            <label>Old Silver Grams</label>
+                            <span>{{record.oldSilverGrams}}</span>
+                        </div>
+                        }
+
+                        @if(record.oldSilverAmount){
+                        <div class="detail-box">
+                            <label>Old Silver Amount</label>
+                            <span>
+                                {{record.oldSilverAmount | currency:'INR':'symbol':'1.0-0'}}
+                            </span>
+                        </div>
+                        }
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+
+            }
+
+        </div>
+    </div>

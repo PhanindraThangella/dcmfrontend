@@ -1,0 +1,13 @@
+.header {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.header h2,p{
+  font-family: "Spectral";
+}
+.inputDate{
+  border-radius:5px;
+}

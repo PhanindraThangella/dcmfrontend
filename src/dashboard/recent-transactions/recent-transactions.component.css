@@ -1,0 +1,61 @@
+/* Navy header layout */
+.dark-header-row {
+  background-color: #0b1a30;
+}
+
+.dark-header-row th {
+  color: #f1b44c; /* Gold header accent */
+  font-size: 13px;
+  font-weight: 600;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #0b1a30;
+}
+
+/* Subtle row boundaries */
+.row-divider {
+  border-bottom: 1px solid #f4f5f8;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* --- Dynamic Status Pill Colors --- */
+
+/* Gold Product Badge */
+.badge-gold {
+  background-color: #fff8eb;
+  color: #dfb03e;
+}
+
+/* Silver Product Badge */
+.badge-silver {
+  background-color: #f2f2f2;
+  color: #7a7a7a;
+}
+
+/* Cash Payment Badge */
+.badge-cash {
+  background-color: #e8f9ee;
+  color: #28a745;
+}
+
+/* UPI Payment Badge */
+.badge-upi {
+  background-color: #e8f0fe;
+  color: #1a73e8;
+}
+
+/* Card Payment Badge */
+.badge-card {
+  background-color: #f3ebff;
+  color: #6f42c1;
+}
+
+/* Standardized badge font alignment spacing override */
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}

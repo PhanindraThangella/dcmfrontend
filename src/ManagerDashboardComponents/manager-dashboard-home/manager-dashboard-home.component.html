@@ -1,0 +1,19 @@
+<div class="home-page row g-0">
+    <div class="col-lg-2" style="position: sticky; top: 0; overflow-y: auto;">
+        <app-manager-dashboard-sidebar (renderMenu)="enableSidebarOptions($event)"></app-manager-dashboard-sidebar>
+    </div>
+    
+    <div class="col-lg-10" style="height: 100vh; overflow-y: auto;">
+        <div class="row g-0">
+            <app-manager-dashboard-header (optionEmitted)="assignSelectedComponent($event)"></app-manager-dashboard-header>
+        </div>
+        <!-- Changed to container-fluid for 100% width -->
+        <div class="container-fluid mt-3 d-flex justify-content-center">
+            <app-pending-sales-requests *ngIf="selectedComponent==='pendingOrders'"></app-pending-sales-requests> 
+            <app-purchase-old-metal *ngIf="selectedComponent === 'purchaseOldMetal'"></app-purchase-old-metal>
+            <app-sell-pure-metal *ngIf="selectedComponent === 'sellPureMetal'"></app-sell-pure-metal>
+            <app-normal-credits *ngIf="selectedComponent === 'normalCredit'"></app-normal-credits>
+            <app-day-book-details *ngIf="selectedComponent === 'daybook'" class="w-100 flex-grow-1"></app-day-book-details>
+        </div> 
+    </div>
+</div>

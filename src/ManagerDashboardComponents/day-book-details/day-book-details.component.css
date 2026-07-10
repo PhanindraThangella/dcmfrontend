@@ -1,0 +1,334 @@
+/* ===========================
+   Scroll Container
+=========================== */
+
+.records-container {
+    height: calc(100vh - 170px);
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.records-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.records-container::-webkit-scrollbar-thumb {
+    background: #c8c8c8;
+    border-radius: 10px;
+}
+
+/* ===========================
+   Card
+=========================== */
+
+.daybook-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: .25s;
+    background: white;
+}
+
+.daybook-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,.12);
+}
+
+/* ===========================
+   Headers
+=========================== */
+
+.sales-header {
+    background: linear-gradient(135deg,#0d6efd,#3b82f6);
+}
+
+.credit-header {
+    background: linear-gradient(135deg,#fd7e14,#ff9f43);
+}
+
+.og-header {
+    background: linear-gradient(135deg,#d4a017,#f4c430);
+    color: #212529 !important;
+}
+
+/* ===========================
+   Badge
+=========================== */
+.badge-gold {
+  background-color: #fff2d5;
+  color: rgba(255,193,7,1);
+}
+.badge-sales {
+  background-color: #cfe2ff;
+  color: #0d6efd;
+}
+.badge-credit {
+  background: linear-gradient(135deg,#fd7e14,#ff9f43);
+  color: white;
+}
+
+/* Silver Product Badge */
+.badge-silver {
+  background-color: #f2f2f2;
+  color: #7a7a7a;
+}
+/* Standardized badge font alignment spacing override */
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* ===========================
+   Body
+=========================== */
+
+.card-body {
+    padding: 24px;
+}
+
+/* ===========================
+   Grid
+=========================== */
+
+.details-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px,1fr));
+
+    gap: 18px;
+
+}
+
+/* ===========================
+   Detail Box
+=========================== */
+
+.detail-box {
+
+    background: #f8f9fa;
+
+    border-radius: 12px;
+
+    padding: 14px 18px;
+
+    border-left: 5px solid #0d6efd;
+
+    transition: .2s;
+
+}
+
+.detail-box:hover {
+
+    background: #eef5ff;
+
+}
+
+.detail-box label {
+
+    display: block;
+
+    color: #6c757d;
+
+    font-size: .82rem;
+
+    margin-bottom: 6px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+}
+
+.detail-box span {
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    color: #212529;
+
+    word-break: break-word;
+
+}
+
+/* ===========================
+   Money Colors
+=========================== */
+
+.text-success {
+
+    color: #198754 !important;
+
+}
+
+.text-primary {
+
+    color: #0d6efd !important;
+
+}
+
+.text-danger {
+
+    color: #dc3545 !important;
+
+}
+
+.text-warning {
+
+    color: #b8860b !important;
+
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+.btn {
+
+    border-radius: 10px;
+
+    padding: 8px 18px;
+
+    font-weight: 600;
+
+}
+
+.btn i {
+
+    margin-right: 6px;
+
+}
+
+/* ===========================
+   Print
+=========================== */
+
+@media print {
+
+    body {
+
+        background: white;
+
+    }
+
+    .records-container {
+
+        height: auto;
+
+        overflow: visible;
+
+    }
+
+    .no-print {
+
+        display: none !important;
+
+    }
+
+    .daybook-card {
+
+        box-shadow: none;
+
+        border: 1px solid #ccc;
+
+        page-break-inside: avoid;
+
+        margin-bottom: 20px;
+
+    }
+
+    .card-header {
+
+        -webkit-print-color-adjust: exact;
+
+        print-color-adjust: exact;
+
+    }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media(max-width:768px){
+
+    .card-body{
+
+        padding:18px;
+
+    }
+
+    .details-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+.card-header-click{
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    user-select:none;
+
+}
+
+.card-header-click:hover{
+
+    filter:brightness(1.05);
+
+}
+
+.card-header i{
+
+    transition:.3s;
+
+}
+
+.card-body{
+
+    animation:expand .25s ease;
+
+}
+
+@keyframes expand{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.amount{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#198754;
+
+}
+.transaction-type {
+    width: 250px;      /* adjust as needed */
+    flex-shrink: 0;
+}   

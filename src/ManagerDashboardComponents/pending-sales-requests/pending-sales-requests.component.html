@@ -1,0 +1,73 @@
+<div *ngIf="transactions.length > 0" class="py-1 mx-4">
+    <div class="transaction-grid transaction-card mb-2 mt-3 px-4 align-items-center shadow-sm row" 
+        *ngFor="let item of transactions" 
+        data-bs-toggle="modal"
+        data-bs-target="#editModal">
+        <div class="col-lg-auto me-5">
+            <div class="row">Tag Number</div>
+            <div class="fw-semibold row">{{item.tagNumber}}</div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Rate/Gram</div>
+            <div class="fw-semibold row align-items-center">
+                <span>{{ item.ratePerGram }}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Total Grams</div>
+            <div class="fw-semibold row align-items-center">
+                <span>{{item.totalGrams}}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Wastage</div>
+            <div class="fw-semibold row align-items-center">
+                <span class="">{{item.wastage}}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-5">
+            <div class="row">Making Chgs</div>
+            <div class="fw-semibold row align-items-center">
+                <span>{{item.makingCharges}}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Total Amount</div>
+            <div class="fw-bold row align-items-center">
+                <span>{{ item.totalAmount }}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row badge rounded-pill px-3 py-2 font-weight-500"
+                [ngClass]="{
+                                'badge-gold': item.itemType === 'GOLD',
+                                'badge-silver': item.itemType === 'SILVER'
+                                }"
+            >{{ item.itemType }}</div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">
+                <button class="btn btn-primary py-1" (click)="openVerifyModal(item)">Verify<i class="bi bi-check2-circle ms-2"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-auto">
+            <div class="row">
+                <button class="btn btn-danger py-1 " (click)="removeSelectedTransaction(item)">Remove<i class="bi bi-x-circle ms-2"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="transactions.length == 0">
+    <div class="container-fluid shadow-sm p-2 rounded bg-dark">
+        <h1 class="text-center text-warning">No pending bills, Let's wait!.</h1>
+    </div>
+</div>
+<app-payment-modal
+[showPaymentModal]="flag" (flagEmitter)="setModalFlag($event)"
+[tagNumber]="selectedTagNumber"
+[totalGrams]="selectedTotalGrams"
+[totalAmount]="selectedTotalAmount"
+[itemType]="selectedItemType"
+
+></app-payment-modal>

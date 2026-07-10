@@ -1,0 +1,96 @@
+<div class="container mt-5">
+    <div class="lot-card">
+        <h3 class="text-center mb-4">Create Lot</h3>
+        <form [formGroup]="lotForm" (ngSubmit)="createLot()">
+            <div class="row g-4">
+                
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-semibold">Vendor Name</label>
+                    <input type="text" class="form-control" formControlName="vendorName">
+                    <div class="text-danger small mt-1" *ngIf="f['vendorName'].touched && f['vendorName'].errors?.['required']">
+                        Vendor Name is required
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-semibold">Metal Type</label>
+                    <input type="text" class="form-control" formControlName="metalType">
+                    <div class="text-danger small mt-1" *ngIf="f['metalType'].touched && f['metalType'].errors?.['required']">
+                        Metal Type is required
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-semibold">Product Name</label>
+                    <input type="text" class="form-control" formControlName="productName">
+                    <div class="text-danger small mt-1" *ngIf="f['productName'].touched && f['productName'].errors?.['required']">
+                        Product Name is required
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-semibold">Peices</label>
+                    <input type="number" class="form-control" formControlName="peices">
+                    <div class="text-danger small mt-1" *ngIf="f['peices'].touched && f['peices'].errors?.['required']">
+                        Price is required
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-semibold">Gross Weight</label>
+                    <input type="number" class="form-control" formControlName="grossWeight">
+                    <div class="text-danger small mt-1" *ngIf="f['grossWeight'].touched && f['grossWeight'].errors?.['required']">
+                        Gross Weight is required
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-semibold">Net Weight</label>
+                    <input type="number" class="form-control" formControlName="netWeight">
+                    <div class="text-danger small mt-1" *ngIf="f['netWeight'].touched && f['netWeight'].errors?.['required']">
+                        Net Weight is required
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label fw-semibold">Fine</label>
+                    <input type="number" class="form-control" formControlName="fine">
+                    <div class="text-danger small mt-1" *ngIf="f['fine'].touched && f['fine'].errors?.['required']">
+                        Fine is required
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label fw-semibold">Stone Amount</label>
+                    <input type="number" class="form-control" formControlName="stoneAmount">
+                    <div class="text-danger small mt-1" *ngIf="f['stoneAmount'].touched && f['stoneAmount'].errors?.['required']">
+                        Stone Amount is required
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label fw-semibold">Time For Payment</label>
+                    <input type="date" class="form-control" formControlName="timeForPayment">
+                    <div class="text-danger small mt-1" *ngIf="f['timeForPayment'].touched && f['timeForPayment'].errors?.['required']">
+                        Payment Date is required
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-5">
+                <button type="submit" class="btn btn-primary px-5 me-3" [disabled]="lotForm.invalid">
+                    Create Lot
+                </button>
+                <button type="button" class="btn btn-outline-secondary px-5" (click)="cancel()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<app-modal [isVisible]="isModalOpen" 
+  [message]="validMessage"
+  [icon]="iconValue"
+  [textColor]="textColor"
+  (close)="isModalOpen = false"></app-modal>

@@ -1,0 +1,30 @@
+/* Deep header tracking matching design dashboard specifications */
+.customtheadrow {
+  background-color: #0b1a30;
+}
+
+/* Light text color targeting headers */
+.customtheadrow th {
+  color: #f1b44c; /* Gold accent color for header labels */
+  font-size: 13px;
+  font-weight: 600;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #0b1a30;
+}
+
+/* Adds soft light rows dividers under lists */
+tbody tr {
+  border-bottom: 1px solid #f4f5f8;
+}
+
+tbody tr:last-child {
+  border-bottom: none; /* Cleans double trailing line gaps */
+}
+
+/* Adjustments for ranks without icons */
+.rank-number {
+  min-width: 12px;
+  display: inline-block;
+  text-align: center;
+}

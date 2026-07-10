@@ -1,0 +1,342 @@
+<div
+  class="modal fade show d-block"
+  tabindex="-1"
+  *ngIf="showPaymentModal"
+  style="background: rgba(0,0,0,.5);">
+
+  <div class="modal-dialog payment-modal modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <form [formGroup]="paymentForm" (ngSubmit)="save()">
+
+        <!-- Header -->
+
+        <div class="modal-header py-1 bg-primary-subtle">
+
+          <h5 class="modal-title text-primary">
+            Payment Details
+          </h5>
+
+          <button
+            type="button"
+            class="btn-close"
+            (click)="closeModal()">
+          </button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <!-- Top Details -->
+
+          <div class="row text-center mb-4 border rounded mx-4 py-3">
+
+            <div class="col-md-3">
+              <label class="mb-2 d-block">Top Number</label>
+              <span class="fw-bold text-primary">
+                {{tagNumber}}
+              </span>
+            </div>
+
+            <div class="col-md-3 border-start">
+              <label class="mb-2 d-block">Total Grams</label>
+              <span class="fw-bold">
+                {{totalGrams}}
+              </span>
+            </div>
+
+            <div class="col-md-3 border-start">
+              <label class="mb-2 d-block">Total Amount</label>
+              <span class="fw-bold text-success">
+                {{totalAmount | currency:'INR'}}
+              </span>
+            </div>
+
+            <div class="col-md-3 border-start">
+
+              <label class="mb-2 d-block">
+                Item Type
+              </label>
+
+              <div
+                class="badge rounded-pill px-3 py-2"
+
+                [ngClass]="{
+                  'badge-gold': itemType==='GOLD',
+                  'badge-silver': itemType==='SILVER'
+                }">
+
+                {{itemType}}
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <hr>
+
+          <h6 class="fw-bold mb-2">
+
+            Mode Of Payment
+
+          </h6>
+
+          <!-- Cash & UPI -->
+
+          <div class="row p-2 m-2">
+
+            <div class="col-lg me-4">
+
+              <div class="row">
+
+                <div class="col-md-4 border rounded-start bg-success-subtle p-2 d-flex justify-content-center align-items-center">
+
+                  <i class="bi bi-cash-stack text-success fs-1"></i>
+
+                  <span class="ms-3 fw-bold">
+
+                    Cash
+
+                  </span>
+
+                </div>
+
+                <div class="col-md-8 border rounded-end">
+
+                  <label class="mt-2">
+
+                    Amount (₹)
+
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control w-75 mb-2"
+                    formControlName="cash"
+                    appCommaNumber
+                    >
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg">
+
+              <div class="row">
+
+                <div class="col-md-4 border rounded-start bg-primary-subtle p-2 d-flex justify-content-center align-items-center">
+
+                  <i class="bi bi-phone text-primary fs-2"></i>
+
+                  <span class="ms-3 fw-bold">
+
+                    UPI
+
+                  </span>
+
+                </div>
+
+                <div class="col-md-8 border rounded-end">
+
+                  <label class="mt-2">
+
+                    Amount (₹)
+
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control w-75 mb-2"
+                    formControlName="upi"
+                    appCommaNumber>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Old Gold -->
+
+          <div class="row p-2 m-2">
+
+            <div class="col-md-2 border rounded-start bg-warning-subtle p-2 d-flex justify-content-center align-items-center">
+
+              <i class="bi bi-grid-fill text-warning fs-1"></i>
+
+              <span class="fw-bold ms-2">
+
+                Old Gold
+
+              </span>
+
+            </div>
+
+            <div class="col-md-10 border rounded-end">
+
+              <div class="row">
+
+                <div class="col-md-6">
+
+                  <label class="mt-2">
+
+                    Weight (Grams)
+
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control w-75"
+                    formControlName="oldGoldWeight">
+
+                </div>
+
+                <div class="col-md-6">
+
+                  <label class="mt-2">
+
+                    Amount (₹)
+
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control w-75"
+                    formControlName="oldGoldAmount"
+                    appCommaNumber>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Credit -->
+
+          <div class="form-check ms-3">
+
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="requiredCredit"
+              formControlName="requiredCredit">
+
+            <label
+              class="form-check-label"
+              for="requiredCredit">
+
+              Credit Required
+
+            </label>
+
+          </div>
+
+          <div *ngIf="paymentForm.get('requiredCredit')?.value">
+
+            <hr>
+
+            <h6 class="fw-bold">
+
+              Credit Details
+
+            </h6>
+
+            <div class="row">
+
+              <div class="col-md-5">
+
+                <label>
+
+                  Customer Name
+
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="customerName">
+
+              </div>
+
+              <div class="col-md-4">
+
+                <label>
+
+                  Mobile No
+
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="mobileNumber">
+
+              </div>
+
+              <div class="col-md-3">
+
+                <label>
+
+                  Amount
+
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="creditAmount"
+                  appCommaNumber>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="modal-footer justify-content-center">
+
+          <button
+            class="btn btn-success px-5"
+            type="submit"
+            [disabled]="paymentForm.invalid">
+
+            <i class="bi bi-save me-2"></i>
+
+            Save Transaction
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+  @if (isAmountModalOpen) {
+    <div class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-icon"><i class="bi bi-esclamation-triangle text-warning"></i></div>
+        <h3 class="text-{{textColor}}">Update Total Amount</h3>
+        <p>{{validAmountMessage}}</p>
+        <button (click)="closeAmountModal()" class="bg-danger me-4">Cancel</button>
+        <button (click)="processNewTransaction()" class="bg-primary">Proceed</button>
+      </div>
+    </div>
+  }
+</div>
+<app-modal [isVisible]="isModalOpen" 
+  [message]="validMessage"
+  [icon]="iconValue"
+  [textColor]="textColor"
+  (close)="isModalOpen = false"></app-modal>

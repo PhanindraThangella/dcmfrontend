@@ -1,0 +1,50 @@
+/* Base Font Family Configuration */
+.heroh1, .textPara, .footertext, .copyrt {
+  font-family: "Spectral", serif;
+}
+
+/* Responsively controlled constraints */
+.logo {
+  max-width: 160px;
+  width: 100%;
+  height: auto;
+}
+
+.heroh1 {
+  color:white;
+  font-weight: 700;
+  line-height: 1.2;
+  font-size: calc(1.8rem + 1.5vw); /* Fluid typography scaled for all device viewports */
+}
+
+.textPara {
+  font-weight: 400;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Replaced static widths with flex layouts & standardized sizes */
+.social-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease-in-out;
+}
+
+.social-circle:hover {
+  border-color: #FFC107;
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+.footertext {
+  color: #FFC107;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.copyrt {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+}

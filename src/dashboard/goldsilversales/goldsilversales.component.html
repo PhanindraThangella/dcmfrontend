@@ -1,0 +1,41 @@
+<div class="card p-4 shadow-sm" style="height:100%; max-width: 500px; border-radius: 12px; border: none;">
+  <h5 class="fw-bold mb-3 text-dark" style="font-size: 16px;">Gold vs Silver Sales</h5>
+  
+  <!-- d-flex and align-items-center replace .chart-content -->
+  <div class="d-flex align-items-center gap-4 h-100">
+    
+    <!-- Chart Left -->
+    <div class="position-relative flex-shrink-0" style="height: 160px; width: 160px;">
+      <canvas #doughnutCanvas></canvas>
+    </div>
+    
+    <!-- Legend Right (w-100 handles flex-grow) -->
+    <div class="d-flex flex-column gap-3 w-100">
+      
+      <!-- Gold Item -->
+      <div class="d-flex justify-content-between align-items-start">
+        <div class="d-flex align-items-start gap-2">
+          <span class="dot gold-dot mt-1"></span>
+          <div class="d-flex flex-column lh-sm">
+            <span class="fw-semibold text-secondary" style="font-size: 14px;">Gold Sales</span>
+            <span class="text-muted small">({{ goldValue | currency:'INR'}})</span>
+          </div>
+        </div>
+        <span class="fw-bold text-dark fs-5">{{ goldPercentage }}%</span>
+      </div>
+
+      <!-- Silver Item -->
+      <div class="d-flex justify-content-between align-items-start">
+        <div class="d-flex align-items-start gap-2">
+          <span class="dot silver-dot mt-1"></span>
+          <div class="d-flex flex-column lh-sm">
+            <span class="fw-semibold text-secondary" style="font-size: 14px;">Silver Sales</span>
+            <span class="text-muted small">({{ silverValue | currency:'INR'}})</span>
+          </div>
+        </div>
+        <span class="fw-bold text-dark fs-5">{{ silverPercentage }}%</span>
+      </div>
+
+    </div>
+  </div>
+</div>

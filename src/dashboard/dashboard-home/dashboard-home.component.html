@@ -1,0 +1,111 @@
+<div class="dashboard-layout row g-0">
+  <div class="col-lg-2" style="position: sticky; top: 0; overflow-y: auto;">
+    <app-sidebar (renderMenu)="enableSidebarOptions($event)"></app-sidebar>
+  </div>
+  <div class="col-lg-10" style="height: 100vh; overflow-y: auto;">
+
+    <app-header (reqEmReg)="enableEmpReg()" (date)="fetchDateFromHeader($event)"></app-header>
+    <app-register-employee *ngIf="showEmpReg"></app-register-employee>
+    <app-vendor-lot-creation *ngIf="showLotComp"></app-vendor-lot-creation>
+    <div *ngIf="!noStatsFlag && showTodayOverview" class="row container w-75 mx-auto bg-white rounded my-4 p-4 shadow">
+        <h3 class="text-center my-4">{{failureMessage}}</h3>
+    </div>
+    <div *ngIf="showTodayOverview && noStatsFlag" class="container-fluid pt-4 py-0">
+      <div *ngIf="noStatsFlag" class="row">
+        <div class="row g-4">
+
+          <div class="col-md-4">
+            <app-stats-card
+              title="Total Sales"
+              value="{{fetchedStats.totalSales | currency:'INR'}}"
+              icon="bi bi-currency-rupee"
+              percent="{{fetchedStats.totalSalesProgress.split('.')[0]}}"
+              >
+            </app-stats-card>
+          </div>
+
+          <div class="col-md-4">
+            <app-stats-card
+              title="Total Profit"
+              value="{{fetchedStats.totalProfits | currency:'INR'}}"
+              icon="bi bi-graph-up-arrow"
+              percent="{{fetchedStats.totalProfitsProgress.split('.')[0]}}"
+              >
+            </app-stats-card>
+          </div>
+
+          <div class="col-md-4">
+            <app-stats-card
+              title="Total Orders"
+              value="{{fetchedStats.totalOrders.split('.')[0]}}"
+              icon="bi bi-handbag-fill">
+            </app-stats-card>
+          </div>
+
+        </div>
+        <div class="row g-4">
+
+          <div class="col-md-4">
+            <app-stats-card
+              title="Gold Sold"
+              value="{{fetchedStats.totalGoldSold}} gms"
+              icon="bi bi-grid-fill"
+              percent="{{fetchedStats.totalGoldProgress.split('.')[0]}}"
+              >
+            </app-stats-card>
+          </div>
+
+          <div class="col-md-4">
+            <app-stats-card
+              title="Silver sold"
+              value="{{fetchedStats.totalSilverSold}} gms"
+              icon="bi bi-grid-fill"
+              percent="{{fetchedStats.totalSilverProgress.split('.')[0]}}"
+              >
+            </app-stats-card>
+          </div>
+
+          <div class="col-md-4">
+            <app-stats-card
+              title="Total Employees Active"
+              value="{{fetchedStats.totalEmployeesPresent.split('.')[0]}}"
+              icon="bi bi-people-fill">
+            </app-stats-card>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row mt-3">
+
+        <div class="col-lg-7">
+          <app-sales-chart></app-sales-chart>
+        </div>
+
+        <div class="col-lg-5">
+          <app-goldsilversales
+          date="{{retrivedDate}}"
+          ></app-goldsilversales>
+        </div>
+
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-lg-5">
+          <app-top-performing-emp-table
+          date="{{retrivedDate}}"
+          ></app-top-performing-emp-table>
+        </div>
+        <div class="col-lg-7">
+          <app-recent-transactions
+          date="{{retrivedDate}}"
+          ></app-recent-transactions>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

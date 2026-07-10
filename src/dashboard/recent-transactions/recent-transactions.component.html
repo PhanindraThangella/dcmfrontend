@@ -1,0 +1,46 @@
+<div class="card p-3 shadow-sm border-0 bg-white mx-auto" style="max-width: 800px; border-radius: 12px;">
+  <!-- Section Header -->
+  <h5 class="fw-bold mb-3 text-dark fs-6 ps-1">Recent Transactions</h5>
+
+  <div class="table-responsive">
+    <table class="table table-borderless align-middle mb-0 text-nowrap">
+      
+      <!-- Styled Dark Table Header -->
+      <thead>
+        <tr class="dark-header-row">
+          <th scope="col" class="ps-3" style="border-top-left-radius: 6px; border-bottom-left-radius: 6px;">Time</th>
+          <th scope="col" class="text-truncate">Employee</th>
+          <th scope="col">Grams</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Profit</th>
+          <th scope="col" class="pe-3" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px;">Type</th>
+        </tr>
+      </thead>
+      
+      <!-- Table Rows Data Structure -->
+      <tbody>
+        @for (tx of transactions; track tx.totalSaleAmount) {
+          <tr class="row-divider">
+            <td class="ps-3 fw-medium text-secondary" style="font-size: 14px;">{{ tx.dateTime | date: 'hh:mm a'}}</td>
+            <td class="fw-medium text-dark" style="font-size: 14px;">{{ tx.employeeName }}</td>
+            <td class="fw-medium text-secondary" style="font-size: 14px;">{{ tx.totalGrams }}</td>
+            <td class="fw-semibold text-dark" style="font-size: 14px;">{{ tx.totalSaleAmount }}</td>
+            <td class="fw-semibold text-dark" style="font-size: 14px;">{{ tx.totalProfit }}</td>
+            
+            <!-- Type Status Column Pill Badges -->
+            <td>
+              <span class="badge rounded-pill px-3 py-1.5 font-weight-500"
+                    [ngClass]="{
+                      'badge-gold': tx.itemType === 'GOLD',
+                      'badge-silver': tx.itemType === 'SILVER'
+                    }">
+                {{ tx.itemType }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+
+    </table>
+  </div>
+</div>

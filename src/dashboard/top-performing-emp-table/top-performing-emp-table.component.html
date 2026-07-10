@@ -1,0 +1,46 @@
+<div class="card p-3 shadow-sm border-0 bg-white mx-auto" style="max-width: 600px; border-radius: 12px;">
+  <!-- Component Title Heading -->
+  <h5 class="fw-bold mb-3 text-dark fs-6 ps-1">Top Performing Employees</h5>
+
+  <div class="table-responsive">
+    <table class="table table-borderless align-middle mb-0 text-nowrap">
+      
+      <!-- Dark Styled Header Row -->
+      <thead>
+        <tr class="customtheadrow">
+          <th scope="col" class="ps-3" style="border-top-left-radius: 6px; border-bottom-left-radius: 6px;">Rank</th>
+          <th scope="col">Employee Name</th>
+          <th scope="col">Sales</th>
+          <th scope="col" class="pe-3" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px;">Bills</th>
+        </tr>
+      </thead>
+      
+      <!-- Dynamic Data List Body -->
+      <tbody>
+        @for (emp of employees; track emp.rank) {
+          <tr class="border-bottom-subtle">
+            <td class="ps-3 fw-medium text-secondary">
+              <div class="d-flex align-items-center gap-2">
+                @if (emp.rank === 1) { <span>🏆</span> }
+                @if (emp.rank === 2) { <span>🥈</span> }
+                @if (emp.rank === 3) { <span>🥉</span> }
+                <span class="rank-number" [class.ms-4]="emp.rank > 3">{{ emp.rank }}</span>
+              </div>
+            </td>
+            
+            <td>
+              <div class="d-flex align-items-center gap-3">
+                <span class="fw-semibold text-dark" style="font-size: 14px;">{{ emp.employeeName }}</span>
+              </div>
+            </td>
+            
+            <td class="fw-medium text-dark" style="font-size: 14px;">{{ emp.sales }}</td>
+            
+            <td class="pe-3 text-secondary fw-medium" style="font-size: 14px;">{{ emp.bills }}</td>
+          </tr>
+        }
+      </tbody>
+
+    </table>
+  </div>
+</div>

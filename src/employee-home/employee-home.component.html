@@ -1,0 +1,159 @@
+<div class="container-fluid max-w-500 px-3">
+  <div class="row bg-dark align-items-center py-2 px-1 match-navbar-edges">
+    <div class="col-8">
+      <img alt="Company Logo" class="img-fluid logo" src="assets/Website-Logo.png"/>
+    </div>
+    <div class="col-4 text-end">
+      <a class="text-warning logoutbtn d-inline-flex align-items-center gap-1" (click)="getLogout()">
+        Logout <i class="bi bi-box-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="row align-items-center mt-4">
+    <div class="col-7">
+      <div class="welcome-badge">
+        <span class="pulse-dot"></span>
+        Welcome, <strong>{{ userName || 'User' }}</strong>
+      </div>
+    </div>
+    <div class="col-5 text-end">
+      <button class="btn btn-primary px-3 py-2 w-100 fs-14 fw-semibold shadow-sm" 
+              data-bs-toggle="modal" 
+              data-bs-target="#addTransactionModal">
+        + Add New
+      </button>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <h2 class="text-dark text-center h4 fw-bold">Recent Transactions</h2>
+  </div>
+
+  <div *ngIf="transactions.length>0" class="py-1">
+    <div class="transaction-grid transaction-header text-white fw-bold mb-2 shadow-sm">
+      <div>Time</div>
+      <div>Grams</div>
+      <div>Rate</div>
+      <div>Total</div>
+      <div>Type</div>
+    </div>
+
+    <div class="transaction-grid transaction-card mb-2 align-items-center shadow-sm" 
+         *ngFor="let item of transactions" 
+         (click)="openEditModal(item)"
+         data-bs-toggle="modal"
+         data-bs-target="#editModal">
+      <div>{{ item.dateTime | date: 'hh:mm a'}}</div>
+      <div class="fw-semibold">{{ item.totalGrams }}</div>
+      <div>{{ item.ratePerGram }}</div>
+      <div class="fw-bold">{{ item.totalAmount }}</div>
+      <div class="badge rounded-pill px-3 py-2 font-weight-500"
+      [ngClass]="{
+                      'badge-gold': item.itemType === 'GOLD',
+                      'badge-silver': item.itemType === 'SILVER'
+                    }"
+      >{{ item.itemType }}</div>
+    </div>
+  </div>
+  <div *ngIf="transactions.length == 0">
+    <div class="container shadow-sm p-2 rounded bg-secondary">
+      <h1 class="text-center text-white">No bills today, Let's Start!.</h1>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 shadow border-0">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Update Transaction</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="updateForm">
+            <div class="mb-3">
+              <label class="form-label small fw-bold">Total Grams / ఎన్ని గ్రాములు</label>
+              <input type="text" class="form-control form-control-lg" formControlName="totalGrams">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold">Rate Per Gram / గ్రామ్ కి ధర</label>
+              <input type="text" class="form-control form-control-lg" formControlName="ratePerGram">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Making Charges / తయారీ ఖర్చులు</label>
+              <input type="text" class="form-control form-control-lg" formControlName="makingCharges">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Wastage / తరుగు </label>
+              <input type="text" class="form-control form-control-lg" formControlName="wastage">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Tag Number / ట్యాగ్ నంబర్</label>
+              <input type="text" class="form-control form-control-lg" formControlName="tagNumber">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary px-4" [disabled]="updateForm.invalid" (click)="updateTransaction()" data-bs-dismiss="modal">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addTransactionModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-bottom modal-dialog-scrollable m-0 max-w-100">
+    <div class="modal-content rounded-top-4 border-0 shadow-lg bottom-drawer-content">
+      
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold">Add Transaction</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="upload-section mb-4">
+          <label for="billUpload" class="upload-box shadow-sm border-primary">
+            <i class="bi bi-receipt text-primary fs-1"></i>
+            <p class="mt-1 mb-0 small fw-bold text-muted">Attach Bill</p>
+          </label>
+          <input id="billUpload" type="file" hidden accept="image/*,application/pdf" (change)="onFileSelected($event)">
+        </div>
+
+        <form [formGroup]="addTransactionForm">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Total Grams / ఎన్ని గ్రాములు</label>
+            <input maxlength="10" type="text" class="form-control" formControlName="totalGrams">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Rate Per Gram / గ్రామ్ కి ధర</label>
+            <input maxlength="10" type="text" class="form-control" formControlName="ratePerGram">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Making Charges / తయారీ ఖర్చులు</label>
+            <input maxlength="10" type="text" class="form-control" formControlName="makingCharges">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Wastage / తరుగు </label>
+            <input maxlength="10" type="text" class="form-control" formControlName="wastage">
+          </div>
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Tag Number / ట్యాగ్ నంబర్</label>
+            <input maxlength="10" type="text" class="form-control" formControlName="tagNumber">
+          </div>
+          
+          <button class="btn btn-primary btn-lg w-100 fw-bold shadow mb-3"
+                  (click)="saveTransaction()"
+                  data-bs-dismiss="modal">
+            Save Transaction
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<app-modal [isVisible]="isModalOpen" 
+  [message]="validMessage"
+  [icon]="iconValue"
+  [textColor]="textColor"
+  (close)="isModalOpen = false"></app-modal>

@@ -1,0 +1,29 @@
+.modal {
+    background: rgba(0, 0, 0, .3);
+}
+
+.table-container {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 2;
+}
+
+tbody tr {
+    height: 55px;
+}
+
+td,
+th {
+    vertical-align: middle;
+}

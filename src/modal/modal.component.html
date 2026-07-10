@@ -1,0 +1,9 @@
+@if (isVisible) {
+  <div class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-icon"><i class="{{icon}}"></i></div>
+      <h3 class="text-{{textColor}}">{{ message }}</h3>
+      <button (click)="closeModal()" class="bg-{{textColor}}">Dismiss</button>
+    </div>
+  </div>
+}

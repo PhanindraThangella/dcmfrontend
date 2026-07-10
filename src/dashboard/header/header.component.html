@@ -1,0 +1,12 @@
+<div class="header px-2">
+  <div>
+    <h4 class="mb-0">Dashboard Overview</h4>
+    <p class="text-secondary mb-0">Welcome back, {{username}}!</p>
+  </div>
+  <div>
+    <input type="date" class="inputDate p-1 me-4" value="{{todayDate}}" (change)="fetchDate($event)">
+    <button class="btn btn-danger me-4 p-1 mb-1" (click)="showForm()">Register New Employee</button>
+    <i class="bi bi-bell fs-4 me-4"></i>
+  </div>
+
+</div>

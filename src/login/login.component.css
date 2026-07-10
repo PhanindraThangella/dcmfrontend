@@ -1,0 +1,61 @@
+.login-wrapper {
+  background: linear-gradient(
+    135deg,
+    #0d6efd,
+    #6f42c1
+  );
+}
+
+.card {
+  backdrop-filter: blur(10px);
+}
+
+.form-control {
+  border-radius: 12px;
+  min-height: 52px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.2);
+}
+
+.btn {
+  min-height: 52px;
+  font-weight: 600;
+}
+
+/* Mobile optimization */
+@media (max-width: 576px) {
+  .card-body {
+    padding: 1.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+/* Desktop Optimization (Appended to the bottom of your CSS) */
+@media (min-width: 992px) {
+  /* Center the card cleanly in the upper-middle region of large screens */
+  .login-wrapper .row {
+    align-items: center !important;
+    /* padding-top: 4rem;
+    padding-bottom: 4rem; */
+  }
+
+  /* Add depth to the card on desktop viewports */
+  .login-wrapper .card {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    transition: transform 0.2s ease;
+  }
+
+  /* Gentle interactive hover effect for desktop users */
+  .login-wrapper .card:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Enhance spacing for form inputs on wider screens */
+  .login-wrapper .mb-3 {
+    margin-bottom: 1.5rem !important;
+  }
+}
