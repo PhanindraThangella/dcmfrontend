@@ -33,7 +33,7 @@
           <div class="row text-center mb-4 border rounded mx-4 py-3">
 
             <div class="col-md-3">
-              <label class="mb-2 d-block">Top Number</label>
+              <label class="mb-2 d-block">Tag Number</label>
               <span class="fw-bold text-primary">
                 {{tagNumber}}
               </span>
@@ -164,7 +164,7 @@
 
           <!-- Old Gold -->
 
-          <div class="row p-2 m-2">
+          <div *ngIf="itemType==='GOLD'" class="row p-2 m-2">
 
             <div class="col-md-2 border rounded-start bg-warning-subtle p-2 d-flex justify-content-center align-items-center">
 
@@ -209,6 +209,62 @@
                     type="text"
                     class="form-control w-75"
                     formControlName="oldGoldAmount"
+                    appCommaNumber>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+          <!-- Old Gold -->
+
+          <div *ngIf="itemType==='SILVER'" class="row p-2 m-2">
+
+            <div class="col-md-2 border rounded-start bg-secondary-subtle p-2 d-flex justify-content-center align-items-center">
+
+              <i class="bi bi-grid-fill text-secondary fs-1"></i>
+
+              <span class="fw-bold ms-2">
+
+                Old Silver
+
+              </span>
+
+            </div>
+
+            <div class="col-md-10 border rounded-end">
+
+              <div class="row">
+
+                <div class="col-md-6">
+
+                  <label class="mt-2">
+
+                    Weight (Grams)
+
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control w-75"
+                    formControlName="oldSilverWeight">
+
+                </div>
+
+                <div class="col-md-6">
+
+                  <label class="mt-2">
+
+                    Amount (₹)
+
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control w-75"
+                    formControlName="oldSilverAmount"
                     appCommaNumber>
 
                 </div>
@@ -277,7 +333,8 @@
                 <input
                   type="text"
                   class="form-control"
-                  formControlName="mobileNumber">
+                  formControlName="mobileNumber"
+                  maxlength="10">
 
               </div>
 

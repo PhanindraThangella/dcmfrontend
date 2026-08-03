@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AuthServiceService } from '../services/auth-service.service';
 import { TransactionServiceService } from '../services/transaction-service.service';
 import { ModalComponent } from '../modal/modal.component';
+import { TagRelatedServiceService } from '../services/tag-related-service.service';
 export interface GoldTransaction {
   transactionId:any,
   dateTime: string;
@@ -41,7 +42,8 @@ export class EmployeeHomeComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthServiceService,
     private cdr: ChangeDetectorRef,
-    private transactionServie:TransactionServiceService
+    private transactionServie:TransactionServiceService,
+    private tagService:TagRelatedServiceService
   ) {
     this.initForms();
   }
@@ -68,7 +70,8 @@ export class EmployeeHomeComponent implements OnInit {
       ratePerGram: ['', [Validators.required, Validators.min(1)]],
       makingCharges: ['',[Validators.required, Validators.min(1)]],
       wastage: ['',[Validators.required, Validators.min(1)]],
-      tagNumber: ['', Validators.required]
+      tagNumber: [0, Validators.required],
+      productName:['',Validators.required]
     });
   }
 
@@ -112,12 +115,12 @@ export class EmployeeHomeComponent implements OnInit {
     })
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedBill = input.files[0];
-    }
-  }
+  // onFileSelected(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     this.selectedBill = input.files[0];
+  //   }
+  // }
 
   saveTransaction(): void {
     this.transactionServie.registerTransaction(this.addTransactionForm.value).subscribe({
@@ -146,8 +149,28 @@ export class EmployeeHomeComponent implements OnInit {
           this.textColor="danger";
         } 
       });
+      this.addTransactionForm.reset();
     }
     getLogout(): void {
     this.authService.logout();
+  }
+  getTagDetails(tagNumber:number)
+  {
+    this.tagService.fetchTagDetails(tagNumber).subscribe({
+      next:(response)=>{
+        this.addTransactionForm.patchValue({
+          tagNumber:tagNumber,
+          totalGrams:response.data.netWeight,
+          productName:response.data.ProductName
+        });
+        console.log(response);
+      },
+      error:(err)=>{
+        this.isModalOpen=true;
+        this.validMessage=err.error.message;
+        this.iconValue="bi bi-exclamation-circle text-danger";
+        this.textColor="danger";
+      } 
+    })
   }
 }

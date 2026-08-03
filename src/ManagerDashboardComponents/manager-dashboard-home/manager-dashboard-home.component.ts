@@ -7,6 +7,10 @@ import { PurchaseOldMetalComponent } from '../purchase-old-metal/purchase-old-me
 import { SellPureMetalComponent } from '../sell-pure-metal/sell-pure-metal.component';
 import { NormalCreditsComponent } from '../normal-credits/normal-credits.component';
 import { DayBookDetailsComponent } from '../day-book-details/day-book-details.component';
+import { CreditReportsComponent } from '../credit-reports/credit-reports.component';
+import { GoldSalesComponent } from '../gold-sales/gold-sales.component';
+import { SilverSalesComponent } from '../silver-sales/silver-sales.component';
+import { EmployeeSalaryComponent } from '../employee-salary/employee-salary.component';
 export interface GoldTransaction {
   tagNumber:number,
   totalAmount: number;
@@ -19,7 +23,7 @@ export interface GoldTransaction {
 @Component({
   selector: 'app-manager-dashboard-home',
   standalone: true,
-  imports: [DayBookDetailsComponent,NormalCreditsComponent,SellPureMetalComponent,PendingSalesRequestsComponent,PurchaseOldMetalComponent,ManagerDashboardSidebarComponent,CommonModule,ManagerDashboardHeaderComponent],
+  imports: [EmployeeSalaryComponent,GoldSalesComponent,SilverSalesComponent,CreditReportsComponent,DayBookDetailsComponent,NormalCreditsComponent,SellPureMetalComponent,PendingSalesRequestsComponent,PurchaseOldMetalComponent,ManagerDashboardSidebarComponent,CommonModule,ManagerDashboardHeaderComponent],
   templateUrl: './manager-dashboard-home.component.html',
   styleUrl: './manager-dashboard-home.component.css'
 })

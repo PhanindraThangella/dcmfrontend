@@ -56,12 +56,12 @@ export class VendorLotCreationComponent {
       error:(error)=>{
         console.log("Error ",error);
         this.isModalOpen=true;
-        const errorObj = JSON.parse(error.error);
-        this.validMessage= errorObj.message;
+        this.validMessage= error.error.message;
         this.iconValue="bi bi-esclamation-circle-fill text-danger";
         this.textColor="danger";
       }
     })
+    this.cancel();
   }
 
   cancel() {

@@ -1,0 +1,20 @@
+<div class="home-page row g-0">
+    <div class="col-lg-2" style="position: sticky; top: 0; overflow-y: auto;">
+        <app-tag-generator-sidebar (renderMenu)="enableSidebarOptions($event)"></app-tag-generator-sidebar>
+        </div>
+    
+    <div class="col-lg-10" style="height: 100vh; overflow-y: auto;">
+        <div class="row g-0">
+            <app-tag-generator-header></app-tag-generator-header>
+
+        </div>
+        <!-- Changed to container-fluid for 100% width -->
+        <div class="container-fluid mt-3 d-flex justify-content-center">
+            <app-tag-generator *ngIf="selectedComponent==='generateTag'"></app-tag-generator> 
+            <app-modify-tag-details *ngIf="selectedComponent==='modifyTagDetails'"></app-modify-tag-details>
+            <app-verify-items *ngIf="selectedComponent==='verifyItems'" class="w-100 flex-grow-1"></app-verify-items>
+            <app-delete-items *ngIf="selectedComponent==='deleteItems'"></app-delete-items>
+            <app-view-recents *ngIf="selectedComponent==='viewRecents'"></app-view-recents>
+        </div> 
+    </div>
+</div>

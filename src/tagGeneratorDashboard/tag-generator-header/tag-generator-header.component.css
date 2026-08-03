@@ -1,0 +1,54 @@
+.header {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.header h2,p{
+  font-family: "Spectral";
+}
+.inputDate{
+  border-radius:5px;
+}
+.welcome-badge {
+  width:250px;
+  height:50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(13, 110, 253, 0.08);
+  color: #0d6efd;
+  padding: 6px 16px;
+  border-radius: 0 50px 50px 0;
+  font-weight: 500;
+  border: 1px solid rgba(13, 110, 253, 0.15);
+  border-left: none;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #0d6efd;
+  border-radius: 50%;
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(13, 110, 253, 0); }
+  100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(13, 110, 253, 0); }
+}
+.list-item-hover:hover:not(.active){
+    cursor:pointer;
+    transform: scale(1.05);
+    background-color: #0b5ed7 !important;
+}
+.list-item-hover{
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+}
+.list-item-hover.active {
+  background-color: #0a4ab2 !important; /* Much darker blue */
+  color: #ffc107 !important; /* Bootstrap warning gold color text */
+  transform: scale(1.05); /* Keeps it slightly expanded */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}

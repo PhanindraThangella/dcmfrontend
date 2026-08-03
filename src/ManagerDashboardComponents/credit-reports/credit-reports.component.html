@@ -1,0 +1,94 @@
+<div class="row align-items-center">
+    <!-- First Section: Mobile No -->
+    <div class="col-lg-6 mb-3 mb-lg-0">
+        <!-- d-flex puts items side-by-side; g-2 adds spacing between them -->
+        <div class="d-flex align-items-center g-2">
+            <!-- text-nowrap prevents the label from breaking into two lines -->
+            <label for="contactNumber" class="form-label text-nowrap mb-0 me-2">Mobile No:</label>
+            <input type="text"
+                   id="contactNumber"
+                   maxlength="10"
+                   [(ngModel)]="contactNumber"
+                   class="form-control me-2">
+            <button class="btn btn-primary" (click)="findByContactNumber()">Find</button>
+        </div>
+    </div>
+
+    <!-- Second Section: Customer Name -->
+    <div class="col-lg-6">
+        <div class="d-flex align-items-center g-2">
+            <label for="customerName" class="form-label text-nowrap mb-0 me-2">Customer Name:</label>
+            <input type="text"
+                   id="customerName"
+                   [(ngModel)]="customerName"
+                   class="form-control me-2">
+            <button class="btn btn-primary" (click)="findByCustomerName()">Find</button>
+        </div>
+    </div>
+</div>
+
+<!-- Added d-flex flex-column align-items-center to center the w-75 cards -->
+<div *ngIf="creditReports.length > 0" class="py-1 d-flex flex-column align-items-center">
+    
+    <!-- Added mx-auto to center the row, replaced column margins with flex distribution -->
+    <div class="transaction-grid transaction-card mb-2 mt-3 px-4 py-2 align-items-center shadow-sm d-flex justify-content-between mx-auto w-75" 
+        *ngFor="let credit of creditReports">
+        
+        <!-- Replaced col-lg-auto with text wrapping containers -->
+        <div class="text-start me-4 p-2">
+            <div class="text-muted small">Customer Name</div>
+            <div class="fw-semibold text-wrap">{{credit.customerName}}</div>
+        </div>
+
+        <div class="text-start me-4 p-2">
+            <div class="text-muted small">Customer Mobile Number</div>
+            <div class="fw-semibold">{{ credit.contactNumber }}</div>
+        </div>
+
+        <div class="text-start me-4 p-2">
+            <div class="text-muted small">Total Amount</div>
+            <div class="fw-bold">{{ credit.totalAmount }}</div>
+        </div>
+
+        <!-- Prevent click propagation so clicking the button doesn't open the card modal -->
+        <div class="ms-auto">
+            <button class="btn btn-primary py-1" (click)="settleCurrentCredit(credit)">
+                Settle<i class="bi bi-check2-circle ms-2"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+<div class="pagination-controls d-flex justify-content-center align-items-center gap-3 mt-4"
+     *ngIf="creditReports.length>0 && contactNumber===0 && customerName === ''">
+  <!-- Disable if on the first page -->
+  <button [disabled]="isFirst" (click)="onPageChange(-1)" class="btn btn-primary">Previous</button>
+  
+  <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+  
+  <!-- Disable if on the last page -->
+  <button [disabled]="isLast" (click)="onPageChange(1)" class="btn btn-primary">Next</button>
+</div>
+
+<div *ngIf="creditReports.length == 0">
+    <div class="container-fluid shadow-sm p-2 rounded bg-dark">
+        <h1 class="text-center text-warning">No credits currently, Let's wait!.</h1>
+    </div>
+</div>
+<div  *ngIf=isVisible class="modal-overlay">
+    <div class="modal-card">
+        <label for="amount" class="form-label">Enter Amount:</label>
+        <input [(ngModel)]="settledAmount" id="amount" type="text" class="form-control" required maxLength="10" placeholder="Enter partial amount or full amount" appCommaNumber>
+        <div class="form-check d-flex align-items-center justify-content-start text-start">
+            <input type="checkbox" [(ngModel)]="settleCredit" class="form-check-input me-2" id="settleCreditCheck">
+            <label class="form-check-label" for="settleCreditCheck">Settle Credit</label>
+        </div>
+        <button (click)="closeModal()" class="me-4 my-4 btn btn-danger">Dismiss</button>
+        <button (click)="settle()" class="my-4 btn btn-success">Settle</button>
+    </div>
+</div>
+<app-modal [isVisible]="isModalOpen" 
+  [message]="validMessage"
+  [icon]="iconValue"
+  [textColor]="textColor"
+  (close)="isModalOpen = false"></app-modal>

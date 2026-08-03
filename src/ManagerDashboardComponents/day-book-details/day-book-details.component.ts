@@ -31,6 +31,8 @@ export interface DayBookRecord {
 
   mobileNumber?: number;
 
+  employeeName?:string;
+
 }
 @Component({
   selector: 'app-day-book-details',

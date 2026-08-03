@@ -33,9 +33,10 @@
                     <div class="col-md-7">
 
                         <input
-                            type="number"
+                            type="text"
                             class="form-control"
-                            [(ngModel)]="amount">
+                            [(ngModel)]="amount"
+                            appCommaNumber>
 
                     </div>
 
@@ -86,9 +87,9 @@
 
                                 <td>{{item.time | date: 'hh:mm a'}}</td>
 
-                                <td>{{item.amountAdded | number}}</td>
+                                <td>{{item.amountAdded | currency:'INR'}}</td>
 
-                                <td>{{item.currentPurse | number}}</td>
+                                <td>{{item.currentPurse | currency:'INR'}}</td>
 
                             </tr>
 

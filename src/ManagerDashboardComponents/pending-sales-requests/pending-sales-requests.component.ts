@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { ManagerServicesService } from '../../services/manager-services.service';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
 import { CommonModule } from '@angular/common';
@@ -26,8 +26,10 @@ export class PendingSalesRequestsComponent {
   selectedTotalGrams:number=0;
   selectedTotalAmount:number=0;
   selectedItemType:string='';
+  private cdr=inject(ChangeDetectorRef);
   ngOnInit(): void {
     this.fetchData();
+    this.cdr.detectChanges();
   }
   fetchData(){
     this.managerService.getPendingTransations().subscribe({

@@ -5,8 +5,8 @@ import { EmployeeHomeComponent } from '../employee-home/employee-home.component'
 import { HomeComponent } from '../home/home.component';
 import { authGuard } from '../guards/auth.guard';
 import { ManagerDashboardHomeComponent } from '../ManagerDashboardComponents/manager-dashboard-home/manager-dashboard-home.component';
-import { TagGeneratorComponent } from '../tag-generator/tag-generator.component';
 import { DayBookDetailsComponent } from '../ManagerDashboardComponents/day-book-details/day-book-details.component';
+import { TagGeneratorHomeComponent } from '../tagGeneratorDashboard/tag-generator-home/tag-generator-home.component';
 export const routes: Routes = [
     {path:'',pathMatch:'full',component:HomeComponent},
     {path:'login',component:LoginComponent},
@@ -14,6 +14,6 @@ export const routes: Routes = [
     {path:'employee',component:EmployeeHomeComponent,canActivate:[authGuard],data:{ role: ['EMPLOYEE']}},
     {path:'dashboard',component:DashboardHomeComponent},
     {path:'MD',component:ManagerDashboardHomeComponent},
-    {path:'tg',component:TagGeneratorComponent},
+    {path:'tg',component:TagGeneratorHomeComponent},
     {path:'db',component:DayBookDetailsComponent}
 ];

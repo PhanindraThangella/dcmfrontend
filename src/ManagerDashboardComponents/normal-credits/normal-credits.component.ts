@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from '../../modal/modal.component';
 import { ManagerServicesService } from '../../services/manager-services.service';
+import { CommaNumberDirective } from '../../directives/comma-number.directive';
 @Component({
   selector: 'app-normal-credits',
   standalone: true,
-  imports: [CommonModule, FormsModule,ModalComponent],
+  imports: [CommonModule, FormsModule,ModalComponent,CommaNumberDirective],
   templateUrl: './normal-credits.component.html',
   styleUrl: './normal-credits.component.css'
 })
@@ -41,8 +42,7 @@ export class NormalCreditsComponent {
               error:(error)=>{
                 console.log("credit error",error);
                 this.isModalOpen=true;
-                const errorObj = JSON.parse(error.error);
-                this.validMessage= errorObj.message;
+                this.validMessage= error.error.message;
                 this.iconValue="bi bi-esclamation-circle-fill text-danger";
                 this.textColor="danger";
               }
@@ -52,12 +52,12 @@ export class NormalCreditsComponent {
           error:(error)=>{
             console.log("credit error",error);
             this.isModalOpen=true;
-            const errorObj = JSON.parse(error.error);
-            this.validMessage= errorObj.message;
+            this.validMessage= error.error.message;
             this.iconValue="bi bi-esclamation-circle-fill text-danger";
             this.textColor="danger";
           }
         });
+        this.cancel();
     }
   }
 

@@ -17,7 +17,7 @@
       DayBook Reports
     </li>
 
-    <li>
+    <li (click)="changeDashboard('creditReports')" [class.active]="currentDashboard === 'creditReports'">
       <i class="bi bi-calendar3 me-2"></i>
       Credits Reports
     </li>
@@ -30,12 +30,12 @@
   <hr class="my-2">
   <span class="textul">Sales</span>
   <ul class="border-3">
-    <li>
+    <li (click)="changeDashboard('goldSales')" [class.active]="currentDashboard === 'goldSales'">
       <i class="bi bi-grid-fill text-warning me-2"></i>
       Gold Sales
     </li>
 
-    <li>
+    <li (click)="changeDashboard('silverSales')" [class.active]="currentDashboard === 'silverSales'">
       <i class="bi bi-grid-fill me-2"></i>
       Silver Sales
     </li>
@@ -48,7 +48,7 @@
   <hr class="my-2">
   <ul class="border-3">
     <span class="textul">Employees</span>
-    <li>
+    <li (click)="changeDashboard('employeeSalaries')" [class.active]="currentDashboard === 'employeeSalaries'">
       <i class="bi bi-person-fill me-2"></i>
       Employee Salary
     </li>

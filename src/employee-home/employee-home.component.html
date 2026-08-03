@@ -111,18 +111,19 @@
       </div>
 
       <div class="modal-body">
-        <div class="upload-section mb-4">
-          <label for="billUpload" class="upload-box shadow-sm border-primary">
-            <i class="bi bi-receipt text-primary fs-1"></i>
-            <p class="mt-1 mb-0 small fw-bold text-muted">Attach Bill</p>
-          </label>
-          <input id="billUpload" type="file" hidden accept="image/*,application/pdf" (change)="onFileSelected($event)">
-        </div>
-
         <form [formGroup]="addTransactionForm">
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Tag Number / ట్యాగ్ నంబర్</label>
+            <input maxlength="10" type="text" class="form-control" formControlName="tagNumber" 
+            (blur)="getTagDetails(addTransactionForm.get('tagNumber')?.value)">
+          </div>
           <div class="mb-3">
             <label class="form-label fw-semibold">Total Grams / ఎన్ని గ్రాములు</label>
             <input maxlength="10" type="text" class="form-control" formControlName="totalGrams">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Product Name / వస్తువు పేరు</label>
+            <input maxlength="10" type="text" class="form-control" formControlName="productName">
           </div>
           <div class="mb-3">
             <label class="form-label fw-semibold">Rate Per Gram / గ్రామ్ కి ధర</label>
@@ -136,11 +137,6 @@
             <label class="form-label fw-semibold">Wastage / తరుగు </label>
             <input maxlength="10" type="text" class="form-control" formControlName="wastage">
           </div>
-          <div class="mb-4">
-            <label class="form-label fw-semibold">Tag Number / ట్యాగ్ నంబర్</label>
-            <input maxlength="10" type="text" class="form-control" formControlName="tagNumber">
-          </div>
-          
           <button class="btn btn-primary btn-lg w-100 fw-bold shadow mb-3"
                   (click)="saveTransaction()"
                   data-bs-dismiss="modal">

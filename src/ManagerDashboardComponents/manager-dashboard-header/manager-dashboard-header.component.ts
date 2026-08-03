@@ -2,6 +2,8 @@ import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { AddMoneyComponent } from '../add-money/add-money.component';
 import { CurrentPurseService } from '../../services/current-purse.service';
 import { CurrencyPipe } from '@angular/common';
+import { PurseRefreshService } from '../../services/purse-refresh.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-manager-dashboard-header',
   standalone: true,
@@ -13,12 +15,17 @@ export class ManagerDashboardHeaderComponent implements OnInit{
   ngOnInit(): void {
     this.optionEmitted.emit(this.selectedOption);
     this.fetchCurrentPurse();
+    this.purseSubscription=this.purseRefresh.refreshPurse$.subscribe(()=>{
+      this.fetchCurrentPurse();
+    })
   }
   username=localStorage.getItem('nickname');
   selectedOption='pendingOrders';
   showModal = false;
   currentPurse:number=0;
   private purseService=inject(CurrentPurseService);
+  private purseRefresh=inject(PurseRefreshService);
+  private purseSubscription!:Subscription;
   @Output()
   optionEmitted=new EventEmitter<string>();
   activeItemIndex: number | null = null; // Stores the clicked item index

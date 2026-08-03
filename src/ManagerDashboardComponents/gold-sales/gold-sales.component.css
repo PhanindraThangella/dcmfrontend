@@ -1,0 +1,60 @@
+.badge-gold {
+  background-color: #fff2d5;
+  color: rgba(255,193,7,1);
+}
+
+/* Silver Product Badge */
+.badge-silver {
+  background-color: #f2f2f2;
+  color: #7a7a7a;
+}
+.badge-puregold {
+  background-color: #fff2d5;
+  color: rgb(255, 210, 76);
+}
+
+/* Silver Product Badge */
+.badge-puresilver {
+  background-color: #f2f2f2;
+  color: #c4c2c2;
+}
+.badge-oldgold {
+  background-color: #fff2d5;
+  color: rgb(201, 151, 0);
+}
+
+/* Silver Product Badge */
+.badge-oldsilver {
+  background-color: #f2f2f2;
+  color: #535151;
+}
+/* Standardized badge font alignment spacing override */
+.badge {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+/* Modern Shared Grid Layout */
+.transaction-grid {
+  padding: 14px 10px;
+  font-size: 16px;
+  border-radius: 12px;
+}
+
+.transaction-header {
+  background: #0d6efd;
+}
+
+.transaction-card {
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.transaction-card:hover {
+  background-color: #f8f9fa;
+}
+
+.transaction-card:active {
+  transform: scale(0.98);
+}

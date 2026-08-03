@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-2">
 
     <div class="card shadow-lg border-0">
 
@@ -21,9 +21,22 @@
                             Lot No
                         </label>
 
-                        <input
-                            class="form-control"
+                        <select
+                            class="form-select"
                             formControlName="lotNo">
+
+                            <option value="">Select</option>
+
+                            <option
+                                *ngFor="let item of lotNumbers"
+                                [value]="item">
+
+                                {{item}}
+
+                            </option>
+
+                        </select>
+
 
                         <small class="text-danger"
                             *ngIf="f['lotNo'].touched && f['lotNo'].invalid">
@@ -75,9 +88,22 @@
                             Product Name
                         </label>
 
-                        <input
-                            class="form-control"
+                        <select
+                            class="form-select"
                             formControlName="productName">
+
+                            <option value="">Select</option>
+
+                            <option
+                                *ngFor="let item of productNames"
+                                [value]="item">
+
+                                {{item}}
+
+                            </option>
+
+                        </select>
+
 
                         <small class="text-danger"
                             *ngIf="f['productName'].touched && f['productName'].invalid">

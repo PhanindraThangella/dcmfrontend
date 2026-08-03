@@ -36,6 +36,7 @@
                                         @case('OS Purchase'){ Old Silver Purchased }
                                         @case('PG Sale'){ Pure Gold Sale }
                                         @case('PS Sale'){ Pure Silver Sale }
+                                        @case('Employee Salary'){ Employee Salary }
                                     }
                                 </h5>
                             </div>
@@ -50,7 +51,15 @@
                                     </div>
                                 </div>
                             }
-                            @if(record.totalAmount){
+                            @if(record.employeeName){
+                                <div class="text-end ms-4 me-4">
+                                    <div class="small opacity-75">Employee Name</div>
+                                    <div class="fw-bold fs-5">
+                                        {{record.employeeName}}
+                                    </div>
+                                </div>
+                            }
+                            @if(record.totalGrams){
                                 <div class="text-end ms-4 me-4">
                                     <div class="small opacity-75">Grams</div>
                                     <div class="fw-bold fs-5">
@@ -198,6 +207,14 @@
                             <label>Old Silver Amount</label>
                             <span>
                                 {{record.oldSilverAmount | currency:'INR':'symbol':'1.0-0'}}
+                            </span>
+                        </div>
+                        }
+                        @if(record.employeeName){
+                        <div class="detail-box">
+                            <label>Employee Name</label>
+                            <span>
+                                {{record.employeeName}}
                             </span>
                         </div>
                         }

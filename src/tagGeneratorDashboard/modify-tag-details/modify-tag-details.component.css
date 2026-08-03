@@ -1,0 +1,15 @@
+.card {
+  border-radius: 12px;
+}
+
+label {
+  font-weight: 600;
+}
+
+input {
+  border-radius: 8px;
+}
+
+button {
+  min-width: 120px;
+}

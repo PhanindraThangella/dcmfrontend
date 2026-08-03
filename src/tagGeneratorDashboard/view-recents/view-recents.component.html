@@ -1,0 +1,55 @@
+<div *ngIf="transactions.length > 0" class="py-1 mx-4">
+    <div class="transaction-grid transaction-card mb-2 mt-3 px-4 align-items-center shadow-sm row" 
+        *ngFor="let item of transactions" 
+        data-bs-toggle="modal"
+        data-bs-target="#editModal">
+        <div class="col-lg-auto me-5">
+            <div class="row">Tag Number</div>
+            <div class="fw-semibold row">{{item.tagNumber}}</div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Product Name</div>
+            <div class="fw-semibold row align-items-center">
+                <span>{{ item.ProductName }}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Gross Weight</div>
+            <div class="fw-semibold row align-items-center">
+                <span>{{item.grossWeight}}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Net Weight</div>
+            <div class="fw-semibold row align-items-center">
+                <span class="">{{item.netWeight}}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-5">
+            <div class="row">Peices</div>
+            <div class="fw-semibold row align-items-center">
+                <span>{{item.peices}}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Stone Weight</div>
+            <div class="fw-bold row align-items-center">
+                <span>{{ item.stoneWeight }}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Stone Amount</div>
+            <div class="fw-bold row align-items-center">
+                <span>{{ item.stoneAmount }}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row badge rounded-pill px-3 py-2 font-weight-500"
+                [ngClass]="{
+                                'badge-gold': item.itemType === 'Gold',
+                                'badge-silver': item.itemType === 'Silver'
+                                }"
+            >{{ item.itemType }}</div>
+        </div>
+    </div>
+</div>

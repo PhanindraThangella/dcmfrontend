@@ -22,7 +22,7 @@
     <!-- Customer Phone -->
     <div class="row mb-3 align-items-center">
         <label class="col-md-4 col-form-label fw-semibold">
-            Mobile NUmber
+            Mobile Number
         </label>
 
         <div class="col-md-8">
@@ -30,7 +30,9 @@
                 type="text"
                 class="form-control"
                 [(ngModel)]="mobileNumber"
-                placeholder="Enter customer phonenumber">
+                placeholder="Enter customer phonenumber"
+                maxlength="10"
+                >
         </div>
     </div>
 
@@ -42,10 +44,11 @@
 
         <div class="col-md-8">
             <input
-                type="number"
+                type="text"
                 class="form-control"
                 [(ngModel)]="creditAmount"
-                placeholder="Enter credit amount">
+                placeholder="Enter credit amount"
+                appCommaNumber>
         </div>
     </div>
 

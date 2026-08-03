@@ -6,8 +6,8 @@ import {
   Validators
 } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TagRelatedServiceService } from '../services/tag-related-service.service';
-import { ModalComponent } from '../modal/modal.component';
+import { TagRelatedServiceService } from '../../services/tag-related-service.service';
+import { ModalComponent } from '../../modal/modal.component';
 @Component({
   selector: 'app-tag-generator',
   standalone: true,
@@ -22,6 +22,31 @@ export class TagGeneratorComponent implements OnInit {
     'Gold',
     'Silver'
   ];
+  lotNumbers=[
+    1,2,3,4,5,6,7,8
+  ];
+  productNames=[
+    'Others'
+  ];
+  goldProductNames=[
+    'Baby Rings',
+    'Small Chains',
+    'Medium Chains',
+    'Big Chains',
+    'Tadu',
+    'Matilu',
+    'Anji Rings',    
+  ]
+  silverProductNames=[
+    'Aavu Duda',
+    'Small Chains',
+    'Medium Chains',
+    'Big Chains',
+    'Plates',
+    'Knachalu',
+    'Spoons',
+    'Glasses'    
+  ]
   isModalOpen=false;
   validMessage="";
   iconValue="";
@@ -58,7 +83,15 @@ export class TagGeneratorComponent implements OnInit {
     this.calculateNetWeight();
 
     this.toggleStoneValidators();
-
+    this.changeProductNames();
+  }
+  changeProductNames(){
+    this.tagForm.get('metalType')?.valueChanges.subscribe(() => {
+      if(this.tagForm.get('metalType')?.value=='Gold')
+        this.productNames=this.goldProductNames;
+      else if(this.tagForm.get('metalType')?.value=='Silver')
+        this.productNames=this.silverProductNames;
+    });
   }
 
   calculateNetWeight() {
@@ -145,13 +178,12 @@ export class TagGeneratorComponent implements OnInit {
       error:(error)=>{
         console.log(error);
         this.isModalOpen=true;
-        const errorObj = JSON.parse(error.error);
-        this.validMessage= errorObj.message;
+        this.validMessage= error.error.message;
         this.iconValue="bi bi-esclamation-circle-fill text-danger";
         this.textColor="danger";
       }
     })
-
+    this.tagForm.reset();
   }
 
 }

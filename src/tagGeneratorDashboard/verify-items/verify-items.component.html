@@ -1,0 +1,113 @@
+<div class="container mt-3">
+
+    <!-- Top -->
+    <div class="row mb-3 align-items-center">
+
+        <div class="col-md-4">
+            <div class="d-flex flex-row">
+                <label class="form-label mt-2 me-4">Tag No:</label>
+                <input
+                    type="text"
+                    class="form-control w-75"
+                    [(ngModel)]="tagNumber">
+            </div>
+        </div>
+
+        <div class="col-md-2 mt-2">
+            <button class="btn btn-primary w-100"
+                    (click)="verifyTag()">
+                Verify
+            </button>
+        </div>
+        <div class="col-md-5">
+            <div class="d-flex flex-row">
+                <label class="form-label mt-2 me-4">Product Name:</label>
+                <select
+                    class="form-select  w-75"
+                    [(ngModel)]="productName"
+                    (ngModelChange)="onProductNameChange($event)" >
+
+                    <option value="">Select</option>
+
+                    <option
+                        *ngFor="let item of productNames"
+                        [value]="item">
+
+                        {{item}}
+
+                    </option>
+
+                </select>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <!-- Left Box -->
+        <div class="col-md-6">
+
+            <div class="card">
+
+                <div class="card-header">
+                    Available Tags
+                </div>
+
+                <div class="card-body">
+
+                    <div
+                        class="border rounded p-2 mb-2"
+                        *ngFor="let item of availableTags">
+
+                        {{item.tagNumber}}
+                        &nbsp;
+                        {{item.peices}}
+                        &nbsp;
+                        {{item.grossWeight}}
+                        &nbsp;
+                        {{item.netWeight}}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Right Box -->
+        <div class="col-md-6">
+
+            <div class="card">
+
+                <div class="card-header">
+                    Verified Tags
+                </div>
+
+                <div class="card-body">
+
+                    <div
+                        class="border rounded p-2 mb-2"
+                        *ngFor="let item of verifiedTags">
+
+                        {{item.tagNumber}}
+                        &nbsp;
+                        {{item.peices}}
+                        &nbsp;
+                        {{item.grossWeight}}
+                        &nbsp;
+                        {{item.netWeight}}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

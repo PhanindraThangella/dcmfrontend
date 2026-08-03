@@ -1,0 +1,39 @@
+<div *ngIf="records.length > 0" class="py-1 mx-4">
+    <div class="transaction-grid transaction-card mb-2 mt-3 px-4 align-items-center shadow-sm row" 
+        *ngFor="let item of records" 
+        data-bs-toggle="modal"
+        data-bs-target="#editModal">
+        @if (item.tagNumber) {
+            <div class="col-lg-auto me-5">
+                <div class="row">Tag Number</div>
+                <div class="fw-semibold row">{{item.tagNumber}}</div>
+            </div>
+        }
+        <div class="col-lg-auto me-4">
+            <div class="row">Total Grams</div>
+            <div class="fw-semibold row align-items-center">
+                <span>{{ item.totalGrams }}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row">Total Amount</div>
+            <div class="fw-bold row align-items-center">
+                <span>{{ item.totalAmount }}</span>
+            </div>
+        </div>
+        <div class="col-lg-auto me-4">
+            <div class="row badge rounded-pill px-3 py-2 font-weight-500"
+                [ngClass]="{
+                                'badge-gold': item.typeOfPayment === 'GOLD',
+                                'badge-puregold': item.typeOfPayment === 'PURE GOLD',
+                                'badge-oldgold': item.typeOfPayment === 'OLD GOLD',
+                                }"
+            >{{ item.typeOfPayment }}</div>
+        </div>
+    </div>
+</div>
+<div *ngIf="records.length == 0">
+    <div class="container-fluid shadow-sm p-2 rounded bg-dark">
+        <h1 class="text-center text-warning">No Records currently, Let's wait!.</h1>
+    </div>
+</div>

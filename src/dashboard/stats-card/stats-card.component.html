@@ -1,4 +1,4 @@
-<div class="card stats-card mb-2 py-2 px-4">
+<!-- <div class="card stats-card mb-2 py-2 px-4">
 
   <div class="row">
     <div class="icon col-lg-4 ">
@@ -9,8 +9,35 @@
         <h3>{{value}}</h3>
     </div>
     <div class="col-lg-2">
-      <span>{{percent}}</span>
+      <span [ngClass]="percentageNumeric > 0 ? 'text-success' : 'text-danger'">{{percentageNumeric}}</span>
     </div>
   </div>
 
+</div> -->
+<div class="card stats-card mb-3 p-3 shadow-sm border-0">
+  <div class="row align-items-center flex-nowrap g-0">
+    
+    <!-- Icon Container -->
+    <div class="col-auto pe-2">
+      <div class="icon-wrapper p-2.5 rounded bg-light d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+        <i [class]="icon" class="fs-4 text-warning"></i>
+      </div>
+    </div>
+    
+    <!-- Title & Shorthand Value -->
+    <div class="col px-2 text-truncate">
+      <h6 class="text-muted text-uppercase mb-0 small fw-semibold text-truncate" style="font-size: 0.72rem; letter-spacing: 0.5px;">{{title}}</h6>
+      <h3 class="mb-0 fw-bold fs-4 text-nowrap text-dark">{{ formattedValue }}</h3>
+    </div>
+    
+    <!-- Percentage Badge -->
+    <div class="col-auto flex-shrink-0 ps-1 text-end">
+      <span class="badge px-2 py-1 fs-7 fw-semibold rounded-pill"
+            [ngClass]="percentageNumeric > 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'">
+        {{ percentageNumeric > 0 ? '▲ +' : '▼ ' }}{{ percentageNumeric }}%
+      </span>
+    </div>
+
+  </div>
 </div>
+

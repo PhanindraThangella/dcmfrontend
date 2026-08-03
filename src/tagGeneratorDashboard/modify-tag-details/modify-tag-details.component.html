@@ -1,0 +1,187 @@
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header d-flex justify-content-center align-items-center bg-primary text-white">
+
+            <h5 class="mb-0">
+                Modify Tag Details
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+                        <!-- Details -->
+
+            <form [formGroup]="form">
+
+                <!-- Tag Number -->
+
+                <div class="row mb-4">
+
+                    <div class="col-md-9">
+
+                        <label class="form-label">
+                            Tag Number
+                        </label>
+
+                        <input
+                            class="form-control"
+                            formControlName="tagNumber">
+
+                    </div>
+
+                    <div class="col-md-3 d-flex align-items-end">
+
+                        <button
+                            class="btn btn-primary w-100"
+                            (click)="fetchDetails()">
+
+                            Fetch
+
+                        </button>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Gross Weight</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            formControlName="grossWeight">
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Less Weight</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            formControlName="lessWeight">
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Net Weight</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            formControlName="netWeight"
+                            readonly>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Pieces</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            formControlName="peices">
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Stone Weight</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            formControlName="stoneWeight">
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Stone Amount</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            formControlName="stoneAmount">
+
+                    </div>
+
+                </div>
+
+                <!-- Tag Print -->
+
+                <div class="mt-3">
+
+                    <label class="me-3">
+                        Tag Print
+                    </label>
+
+                    <div class="form-check form-check-inline">
+
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            [value]="true"
+                            formControlName="tagPrint">
+
+                        <label class="form-check-label">
+                            Yes
+                        </label>
+
+                    </div>
+
+                    <div class="form-check form-check-inline">
+
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            [value]="false"
+                            formControlName="tagPrint">
+
+                        <label class="form-check-label">
+                            No
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+
+                <div class="text-center mt-4">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary me-3"
+                        (click)="cancel()">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="save()">
+
+                        Save
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

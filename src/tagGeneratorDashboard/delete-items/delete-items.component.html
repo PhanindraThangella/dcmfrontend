@@ -1,0 +1,154 @@
+<div class="container mt-3">
+
+    <!-- Top -->
+    <div class="row mb-3 align-items-center">
+
+        <div class="col-md-4">
+            <div class="d-flex flex-row">
+                <label class="form-label mt-2 me-4">Tag No:</label>
+                <input
+                    type="text"
+                    class="form-control w-75"
+                    [(ngModel)]="tagNumber">
+            </div>
+        </div>
+
+        <div class="col-md-2 mt-2">
+            <button class="btn btn-primary w-100"
+                    (click)="fetchTag()">
+                Fetch Details
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="card-body">
+
+                        <!-- Details -->
+
+            <form>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+                            Tag Number
+                        </label>
+
+                        <input
+                            class="form-control"
+                            [value]="tagNumber"
+                            readonly>
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+
+                        <label>Product Name</label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            [value]="item?.ProductName"
+                            readonly>
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+
+                        <label>Gross Weight</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            [value]="item?.grossWeight"
+                            readonly>
+
+                    </div>
+
+                    
+                    <div class="col-md-4 mb-3">
+
+                        <label>Net Weight</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            [value]="item?.netWeight"
+                            readonly>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Pieces</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            [value]="item?.peices"
+                            readonly>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Stone Weight</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            [value]="item?.stoneWeight">
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Stone Amount</label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            [value]="item?.stoneAmount"
+                            readonly>
+
+                    </div>
+
+                </div>
+                <!-- Buttons -->
+
+                <div class="text-center mt-4">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary me-3"
+                        (click)="cancel()">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        (click)="delete(item!.id)"
+                        [disabled]="item===undefined">
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+</div>
+<app-modal [isVisible]="isModalOpen" 
+  [message]="validMessage"
+  [icon]="iconValue"
+  [textColor]="textColor"
+  (close)="isModalOpen = false"></app-modal>

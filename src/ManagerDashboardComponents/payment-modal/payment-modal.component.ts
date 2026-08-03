@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output,inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output,SimpleChanges,inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CommaNumberDirective } from '../../directives/comma-number.directive';
@@ -10,6 +10,7 @@ import {
   Validators
 } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
+import { PurseRefreshService } from '../../services/purse-refresh.service';
 @Component({
   selector: 'app-payment-modal',
   standalone: true,
@@ -19,6 +20,7 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class PaymentModalComponent {
   private http=inject(ManagerServicesService);
+  private purseService=inject(PurseRefreshService);
   constructor(private fb:FormBuilder){}
   @Input()
   showPaymentModal:boolean = false;
@@ -56,6 +58,15 @@ export class PaymentModalComponent {
       '',
       [Validators.min(0)]
     ],
+    oldSilverWeight: [
+      '',
+      [Validators.min(0.001)]
+    ],
+
+    oldSilverAmount: [
+      '',
+      [Validators.min(0)]
+    ],
 
     requiredCredit: [false],
 
@@ -66,6 +77,7 @@ export class PaymentModalComponent {
     creditAmount: ['']
 
   });
+  
 
   this.paymentForm
     .get('requiredCredit')
@@ -130,13 +142,16 @@ export class PaymentModalComponent {
       this.toNumber(form.cash) +
       this.toNumber(form.upi) +
       this.toNumber(form.oldGoldAmount) +
+      this.toNumber(form.oldSilverAmount)+
       this.toNumber(form.creditAmount);
 
     return calculatedTotal === this.totalAmount;
   }
   save() {
+    console.log(this.paymentForm.value);
     if(this.isPaymentValid())
     {
+      console.log(this.paymentForm.value);
       this.processNewTransaction();
     }
     else{
@@ -145,10 +160,12 @@ export class PaymentModalComponent {
       this.toNumber(form.cash) +
       this.toNumber(form.upi) +
       this.toNumber(form.oldGoldAmount) +
+      this.toNumber(form.oldSilverAmount)+
       this.toNumber(form.creditAmount);
       this.isAmountModalOpen=true;
       this.validAmountMessage=`Old Amount: ${this.totalAmount} and new Amount: ${calculatedTotal}`;
     }
+    this.paymentForm.reset();
   }
   processNewTransaction(){
     this.http.updateTransactionStatus(this.tagNumber,this.totalAmount).subscribe({
@@ -158,22 +175,22 @@ export class PaymentModalComponent {
         error:(error)=>{
           console.log("error",error);
           this.isModalOpen=true;
-          const errorObj = JSON.parse(error.error);
-          this.validMessage= errorObj.message;
+          this.validMessage= error.error.message;
           this.iconValue="bi bi-esclamation-circle-fill text-danger";
           this.textColor="danger";
         }
       });
       const triggerPayment=(finalCreditId:number)=>
       {
-        const {cash,upi,oldGoldAmount,oldGoldWeight}=this.paymentForm.value;
+        const {cash,upi,oldGoldAmount,oldGoldWeight,oldSilverWeight,oldSilverAmount}=this.paymentForm.value;
         const payload = {
           tagNumber: this.tagNumber,
           totalCash: cash || 0,
           totalUpi: upi || 0,
-          ogGrams: oldGoldWeight || 0,
-          ogAmount: oldGoldAmount || 0,
-          creditId: finalCreditId
+          ogGrams: oldGoldWeight>0?oldGoldWeight:oldSilverWeight || 0,
+          ogAmount: oldGoldAmount>0?oldGoldAmount:oldSilverAmount || 0,
+          creditId: finalCreditId,
+          itemType:this.itemType
         };
         this.http.addNewPayment(payload).subscribe({
           next:(response)=>{
@@ -182,12 +199,12 @@ export class PaymentModalComponent {
             this.validMessage="Payment Added Successfully.";
             this.iconValue="bi bi-check-circle text-success";
             this.textColor="success";
+            this.purseService.triggerPurseRefresh();
           },
           error:(error)=>{
             console.log("Error response:",error);
             this.isModalOpen=true;
-            const errorObj = JSON.parse(error.error);
-            this.validMessage= errorObj.message;
+            this.validMessage= error.error.message;
             this.iconValue="bi bi-esclamation-circle-fill text-danger";
             this.textColor="danger";
             
@@ -207,8 +224,7 @@ export class PaymentModalComponent {
           error:(error)=>{
             console.log("credit error",error);
             this.isModalOpen=true;
-            const errorObj = JSON.parse(error.error);
-            this.validMessage= errorObj.message;
+            this.validMessage= error.error.message;
             this.iconValue="bi bi-esclamation-circle-fill text-danger";
             this.textColor="danger";
           }
