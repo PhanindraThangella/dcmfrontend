@@ -42,6 +42,14 @@ export class LoginComponent {
           {
             this.router.navigate(["admin"]);
           }
+          else if( this.role=="MANAGER")
+          {
+            this.router.navigate(["manager"]);
+          }
+          else if( this.role=="TAGGENERATOR")
+          {
+            this.router.navigate(["tagGenerator"]);
+          }
       },
       error:(error)=>{
         this.errorMessage=error.error.message;

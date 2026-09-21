@@ -12,20 +12,71 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <label class="form-label fw-semibold">Metal Type</label>
-                    <input type="text" class="form-control" formControlName="metalType">
-                    <div class="text-danger small mt-1" *ngIf="f['metalType'].touched && f['metalType'].errors?.['required']">
-                        Metal Type is required
-                    </div>
-                </div>
+                <!-- Metal -->
 
                 <div class="col-lg-3 col-md-6">
-                    <label class="form-label fw-semibold">Product Name</label>
-                    <input type="text" class="form-control" formControlName="productName">
-                    <div class="text-danger small mt-1" *ngIf="f['productName'].touched && f['productName'].errors?.['required']">
+
+                    <label class="form-label">
+                        Metal Type
+                    </label>
+
+                    <select
+                        class="form-select"
+                        formControlName="metalType">
+
+                        <option value="">Select</option>
+
+                        <option
+                            *ngFor="let item of metalTypes"
+                            [value]="item">
+
+                            {{item}}
+
+                        </option>
+
+                    </select>
+
+                    <small class="text-danger"
+                        *ngIf="f['metalType'].touched && f['metalType'].invalid">
+
+                        Metal Type is required
+
+                    </small>
+
+                </div>
+
+                <!-- Product -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label class="form-label">
+                        Product Name
+                    </label>
+
+                    <select
+                        class="form-select"
+                        formControlName="productName">
+
+                        <option value="">Select</option>
+
+                        <option
+                            *ngFor="let item of productNames"
+                            [value]="item">
+
+                            {{item}}
+
+                        </option>
+
+                    </select>
+
+
+                    <small class="text-danger"
+                        *ngIf="f['productName'].touched && f['productName'].invalid">
+
                         Product Name is required
-                    </div>
+
+                    </small>
+
                 </div>
 
                 <div class="col-lg-3 col-md-6">

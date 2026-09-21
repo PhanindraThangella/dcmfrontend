@@ -16,7 +16,7 @@ import { ViewRecentsComponent } from '../view-recents/view-recents.component';
   styleUrl: './tag-generator-home.component.css'
 })
 export class TagGeneratorHomeComponent {
-  selectedComponent:string='';
+  selectedComponent:string='generateTag';
   assignSelectedComponent(option:string){
     this.selectedComponent=option;
     console.log(option);

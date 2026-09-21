@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ManagerServicesService } from '../../services/manager-services.service';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
 import { CommonModule } from '@angular/common';
+import { OrdersRefreshServiceService } from '../../services/orders-refresh-service.service';
+import { Subscription } from 'rxjs';
 export interface GoldTransaction {
   tagNumber:number,
   totalAmount: number;
@@ -20,16 +22,19 @@ export interface GoldTransaction {
 })
 export class PendingSalesRequestsComponent {
   transactions:GoldTransaction[]=[];
+  private ordersRefresh=inject(OrdersRefreshServiceService);
   private managerService=inject(ManagerServicesService);
+  private ordersSubscription!:Subscription;
   flag=false;
   selectedTagNumber:number=0;
   selectedTotalGrams:number=0;
   selectedTotalAmount:number=0;
   selectedItemType:string='';
-  private cdr=inject(ChangeDetectorRef);
   ngOnInit(): void {
     this.fetchData();
-    this.cdr.detectChanges();
+    this.ordersSubscription=this.ordersRefresh.refreshPendingOrders$.subscribe(()=>{
+      this.fetchData();
+    })
   }
   fetchData(){
     this.managerService.getPendingTransations().subscribe({
@@ -38,6 +43,10 @@ export class PendingSalesRequestsComponent {
         this.transactions=response.data;
       },
       error:(error)=>{
+        if(error.error.message === "No Pending transactions currently")
+        {
+          this.transactions=[];
+        }
         console.log(error);
       }
     })

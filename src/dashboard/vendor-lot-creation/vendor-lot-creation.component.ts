@@ -17,6 +17,32 @@ export class VendorLotCreationComponent {
   validMessage="";
   iconValue="";
   textColor="";
+  metalTypes = [
+    'Gold',
+    'Silver'
+  ];
+  productNames=[
+    'Others'
+  ];
+  goldProductNames=[
+    'Baby Rings',
+    'Small Chains',
+    'Medium Chains',
+    'Big Chains',
+    'Tadu',
+    'Matilu',
+    'Anji Rings',    
+  ]
+  silverProductNames=[
+    'Aavu Duda',
+    'Small Chains',
+    'Medium Chains',
+    'Big Chains',
+    'Plates',
+    'Knachalu',
+    'Spoons',
+    'Glasses'    
+  ]
   constructor(private fb: FormBuilder) {
 
     this.lotForm = this.fb.group({
@@ -32,9 +58,17 @@ export class VendorLotCreationComponent {
       timeForPayment: ['', Validators.required]
 
     });
+    this.changeProductNames();
 
   }
-
+  changeProductNames(){
+    this.lotForm.get('metalType')?.valueChanges.subscribe(() => {
+      if(this.lotForm.get('metalType')?.value=='Gold')
+        this.productNames=this.goldProductNames;
+      else if(this.lotForm.get('metalType')?.value=='Silver')
+        this.productNames=this.silverProductNames;
+    });
+  }
   get f() {
     return this.lotForm.controls;
   }

@@ -74,7 +74,12 @@ export class AuthServiceService {
     return localStorage.getItem("role") || '';
   }
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    const authData = localStorage.getItem(this.TOKEN_KEY);
+    if (!authData) {
+      return null;
+    }
+    const auth = JSON.parse(authData);
+    return auth.token;
   }
   isLogedIn():boolean{
     return !!localStorage.getItem(this.TOKEN_KEY);

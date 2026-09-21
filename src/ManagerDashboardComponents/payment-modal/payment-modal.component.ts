@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { PurseRefreshService } from '../../services/purse-refresh.service';
+import { OrdersRefreshServiceService } from '../../services/orders-refresh-service.service';
 @Component({
   selector: 'app-payment-modal',
   standalone: true,
@@ -21,6 +22,7 @@ import { PurseRefreshService } from '../../services/purse-refresh.service';
 export class PaymentModalComponent {
   private http=inject(ManagerServicesService);
   private purseService=inject(PurseRefreshService);
+  private OrdersRefreshService=inject(OrdersRefreshServiceService);
   constructor(private fb:FormBuilder){}
   @Input()
   showPaymentModal:boolean = false;
@@ -167,72 +169,183 @@ export class PaymentModalComponent {
     }
     this.paymentForm.reset();
   }
-  processNewTransaction(){
-    this.http.updateTransactionStatus(this.tagNumber,this.totalAmount).subscribe({
-        next:(response)=>{
-          console.log(response);
+  processNewTransaction(): void {
+
+    // Take a snapshot of the form values BEFORE any asynchronous API call.
+    const formValue = this.paymentForm.getRawValue();
+
+    const requiredCredit = formValue.requiredCredit === true;
+
+    if (requiredCredit) {
+      this.createCreditAndProcessPayment(formValue);
+    } else {
+      this.addPayment(0, formValue);
+    }
+  }
+
+
+  /**
+   * Creates credit first and then processes the payment.
+   */
+  private createCreditAndProcessPayment(formValue: any): void {
+
+    const creditPayload = {
+      customerName: formValue.customerName,
+      mobileNumber: formValue.mobileNumber,
+      creditAmount: formValue.creditAmount
+    };
+
+    this.http.createCredit(creditPayload).subscribe({
+
+      next: (response) => {
+
+        console.log('Credit created:', response);
+
+        const creditId = response.data.creditId;
+
+        this.addPayment(creditId, formValue);
+      },
+
+      error: (error) => {
+        this.handleError(error);
+      }
+    });
+  }
+
+
+  /**
+   * Creates the payment and then updates the transaction status.
+   */
+  private addPayment(creditId: number, formValue: any): void {
+
+    const paymentPayload = this.buildPaymentPayload(
+      creditId,
+      formValue
+    );
+
+    console.log('Payment payload:', paymentPayload);
+
+    this.http.addNewPayment(paymentPayload).subscribe({
+
+      next: (response) => {
+
+        console.log('Payment added:', response);
+
+        this.updateTransactionStatus();
+        this.closeModal();
+      },
+
+      error: (error) => {
+        this.handleError(error);
+      }
+    });
+  }
+
+
+  /**
+   * Builds the payment payload.
+   */
+  private buildPaymentPayload(
+    creditId: number,
+    formValue: any
+  ): any {
+
+    const {
+      cash,
+      upi,
+      oldGoldAmount,
+      oldGoldWeight,
+      oldSilverWeight,
+      oldSilverAmount
+    } = formValue;
+
+    return {
+      tagNumber: this.tagNumber,
+
+      totalCash: cash || 0,
+
+      totalUpi: upi || 0,
+
+      ogGrams:
+        oldGoldWeight > 0
+          ? oldGoldWeight
+          : oldSilverWeight || 0,
+
+      ogAmount:
+        oldGoldAmount > 0
+          ? oldGoldAmount
+          : oldSilverAmount || 0,
+
+      creditId: creditId,
+
+      itemType: this.itemType
+    };
+  }
+
+
+  /**
+   * Updates the transaction status after payment is successfully added.
+   */
+  private updateTransactionStatus(): void {
+
+    this.http
+      .updateTransactionStatus(
+        this.tagNumber,
+        this.totalAmount
+      )
+      .subscribe({
+
+        next: (response) => {
+
+          console.log('Transaction status updated:', response);
+
+          this.showSuccessMessage();
+
+          setTimeout(() => {
+            this.OrdersRefreshService.triggerOrdersREfresh();
+          }, 1000);
         },
-        error:(error)=>{
-          console.log("error",error);
-          this.isModalOpen=true;
-          this.validMessage= error.error.message;
-          this.iconValue="bi bi-esclamation-circle-fill text-danger";
-          this.textColor="danger";
+
+        error: (error) => {
+          this.handleError(error);
         }
       });
-      const triggerPayment=(finalCreditId:number)=>
-      {
-        const {cash,upi,oldGoldAmount,oldGoldWeight,oldSilverWeight,oldSilverAmount}=this.paymentForm.value;
-        const payload = {
-          tagNumber: this.tagNumber,
-          totalCash: cash || 0,
-          totalUpi: upi || 0,
-          ogGrams: oldGoldWeight>0?oldGoldWeight:oldSilverWeight || 0,
-          ogAmount: oldGoldAmount>0?oldGoldAmount:oldSilverAmount || 0,
-          creditId: finalCreditId,
-          itemType:this.itemType
-        };
-        this.http.addNewPayment(payload).subscribe({
-          next:(response)=>{
-            console.log("Payment added:",response);
-            this.isModalOpen=true;
-            this.validMessage="Payment Added Successfully.";
-            this.iconValue="bi bi-check-circle text-success";
-            this.textColor="success";
-            this.purseService.triggerPurseRefresh();
-          },
-          error:(error)=>{
-            console.log("Error response:",error);
-            this.isModalOpen=true;
-            this.validMessage= error.error.message;
-            this.iconValue="bi bi-esclamation-circle-fill text-danger";
-            this.textColor="danger";
-            
-          }
-        });
-      };
-      if(this.paymentForm.get('requiredCredit')?.value === true)
-      {
-        const { customerName, mobileNumber, creditAmount } = this.paymentForm.value;
-        const payload = { customerName, mobileNumber, creditAmount };
-        this.http.createCredit(payload).subscribe({
-          next:(response)=>{
-            const creditId=response.data.creditId;
-            triggerPayment(creditId);
-            console.log("created credit",response);
-          },
-          error:(error)=>{
-            console.log("credit error",error);
-            this.isModalOpen=true;
-            this.validMessage= error.error.message;
-            this.iconValue="bi bi-esclamation-circle-fill text-danger";
-            this.textColor="danger";
-          }
-        });
-      }
-      else{
-        triggerPayment(0);
-      }
-      this.closeModal();
+  }
+
+
+  /**
+   * Displays success message.
+   */
+  private showSuccessMessage(): void {
+
+    this.isModalOpen = true;
+
+    this.validMessage = 'Payment Added Successfully.';
+
+    this.iconValue = 'bi bi-check-circle text-success';
+
+    this.textColor = 'success';
+
+    this.purseService.triggerPurseRefresh();
+  }
+
+
+  /**
+   * Common error handling.
+   */
+  private handleError(error: any): void {
+
+    console.error('Transaction error:', error);
+
+    this.isModalOpen = true;
+
+    this.validMessage =
+      error?.error?.message ||
+      'Something went wrong. Please try again.';
+
+    this.iconValue =
+      'bi bi-exclamation-circle-fill text-danger';
+
+    this.textColor = 'danger';
   }
 }
